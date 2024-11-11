@@ -8,6 +8,7 @@ import Homepage from "./pages/Homepage";
 import { Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+import RecipesPage from "./pages/RecipesPage";
 //import Search from "./components/Search";
 //import { Carousel } from "react-multi-carousel";
 //import "react-multi-carousel/lib/styles.css";
@@ -20,6 +21,7 @@ function App() {
         <div className="content">
           <Routes>
             <Route path="/" element={<Homepage />} />
+            <Route path="/recipes" element={<RecipesPage />} />
           </Routes>
         </div>
         <Footer />

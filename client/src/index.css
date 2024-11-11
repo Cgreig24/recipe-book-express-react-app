@@ -151,6 +151,20 @@ button:focus-visible {
   text-decoration: underline;
 }
 
+.logoSection {
+  display: flex;
+  justify-content: center;
+}
+
+.apiText {
+  padding-right: 20px;
+}
+
+.edamamLogo {
+  width: 150px;
+  padding-left: 20px;
+}
+
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
