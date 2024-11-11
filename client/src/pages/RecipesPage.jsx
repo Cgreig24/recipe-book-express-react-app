@@ -1,22 +1,13 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import RecipeList from "../components/RecipeList";
+import { useNavigate } from "react-router-dom";
 
 function RecipeDeets() {
   const [recipes, setRecipes] = useState([]);
   const [search, setSearch] = useState([""]);
   const [query, setQuery] = useState("chicken");
-
-  const [recipeFetch, setRecipeFetch] = useState(null);
-
-  const fetchRecipe = async () => {
-    try {
-      const response = await axios.post("http://localhost:5012/fetch-recipes");
-      setRecipeFetch(response.data.data);
-    } catch (error) {
-      console.error("Error fetching recipe:", error);
-    }
-  };
+  const navigate = useNavigate();
 
   const getRecipes = async () => {
     const response = await axios.get(`http://localhost:5012/recipes/${query}`);
@@ -32,6 +23,11 @@ function RecipeDeets() {
     e.preventDefault();
     setQuery(search);
     setSearch("");
+  };
+
+  const handleRecipeClick = (recipe) => {
+    const recipeid = recipe.uri.split("#recipe_")[1];
+    navigate(`/fetch-recipes/${recipeid}`);
   };
 
   return (
@@ -50,21 +46,15 @@ function RecipeDeets() {
         </form>
 
         <div>
-          <button onClick={fetchRecipe}>Fetch Recipe</button>
-          {recipeFetch && (
-            <div>
-              <h2>{recipeFetch.title}</h2>
-              <img src={recipeFetch.image} alt={recipeFetch.title} />
-              <p>{recipeFetch.ingredients.join(", ")}</p>
-              <a
-                href={recipeFetch.instructions}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                View Instructions
-              </a>
+          {recipes.map((recipe) => (
+            <div
+              key={recipe.recipe.uri}
+              onClick={() => handleRecipeClick(recipe.recipe)}
+            >
+              <h3>{recipe.recipe.label}</h3>
+              <img src={recipe.recipe.image} alt={recipe.recipe.label} />
             </div>
-          )}
+          ))}
         </div>
 
         <RecipeList recipes={recipes} />
