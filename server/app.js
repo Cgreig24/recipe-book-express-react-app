@@ -87,12 +87,13 @@ app.get("/recipes/:query", async (req, res) => {
 });
 
 // Fetch data from Edamam API and save it to MongoDB
-app.post("/fetch-recipes", async (req, res) => {
-  try {
-    const response = await axios.get(
-      `https://api.edamam.com/api/recipes/v2/3f40351ef85b4323b4c9bf654355cafe?type=public&app_id=${process.env.VITE_APP_ID}&app_key=${process.env.VITE_APP_KEY}`
-    );
+app.post("/fetch-recipes/:recipeid", async (req, res) => {
+  const { recipeid } = req.params;
+  const recipeUrl = `https://api.edamam.com/api/recipes/v2/${recipeid}?type=public&app_id=${process.env.VITE_APP_ID}&app_key=${process.env.VITE_APP_KEY}`;
 
+  try {
+    const response = await axios.get(recipeUrl);
+    console.log(response);
     const recipeData = response.data.recipe; // Assuming response contains an array of recipes
 
     if (!recipeData) {
@@ -128,8 +129,10 @@ app.get("/recipes/:recipeid", async (req, res) => {
 */
 }
 
+/*
 const { uri } =
   "http://www.edamam.com/ontologies/edamam.owl#recipe_3f40351ef85b4323b4c9bf654355cafe";
+*/
 
 {
   /* 
