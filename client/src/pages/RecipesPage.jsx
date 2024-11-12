@@ -51,8 +51,11 @@ function RecipeDeets() {
               key={recipe.recipe.uri}
               onClick={() => handleRecipeClick(recipe.recipe)}
             >
-              <h3>{recipe.recipe.label}</h3>
+              <h2>{recipe.recipe.label}</h2>
               <img src={recipe.recipe.image} alt={recipe.recipe.label} />
+              <p>Number of Ingredients: {recipe.recipe.ingredients.length}</p>
+              <p>{recipe.recipe.dishType}</p>
+              <p>Serves: {recipe.recipe.yield}</p>
             </div>
           ))}
         </div>

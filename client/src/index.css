@@ -59,8 +59,8 @@ body {
 .navlinksContainer {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
-  width: 500px;
+  justify-content: space-evenly;
+  width: 75%;
 }
 
 .navlinks {
@@ -78,7 +78,7 @@ body {
   color: rgb(255, 255, 255);
   background-color: #371965;
   border-radius: 10px;
-  padding: 4px 8px;
+  padding: 4px 2px;
 }
 
 h1 {

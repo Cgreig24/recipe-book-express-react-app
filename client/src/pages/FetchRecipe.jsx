@@ -1,11 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../context/auth.context";
 
 function RecipeFetcher() {
   const { recipeid } = useParams();
   const [recipeFetch, setRecipeFetch] = useState(null);
+  const { user } = useContext(AuthContext);
 
   const navigate = useNavigate();
 
@@ -17,6 +19,31 @@ function RecipeFetcher() {
       setRecipeFetch(response.data.data);
     } catch (error) {
       console.error("Error fetching recipe:", error);
+    }
+  };
+
+  const addToYourRecipes = async () => {
+    if (!user) {
+      console.log("User is not logged in");
+      return;
+    }
+
+    try {
+      const token = localStorage.getItem("authToken");
+      const response = await axios.post(
+        `http://localhost:5012/${user._id}/your-recipes/${recipeid}`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      console.log("Recipe added:", response.data);
+      alert("Recipe added to your collection");
+    } catch (error) {
+      console.error("Error adding recipe:", error);
+      alert("Failed to add recipe");
     }
   };
 
@@ -53,6 +80,15 @@ function RecipeFetcher() {
                 </a>
               </p>
             </div>
+            <button
+              className="addToYourRecipesButton"
+              onClick={() => {
+                addToYourRecipes();
+              }}
+            >
+              Add to Your Recipes
+            </button>
+
             <button
               className="backButton"
               onClick={() => {

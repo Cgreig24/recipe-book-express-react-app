@@ -9,19 +9,19 @@ const API_URL = `http://localhost:5012`;
 function SignupPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [name, setName] = useState("");
+  const [username, setUsername] = useState("");
   const [errorMessage, setErrorMessage] = useState(undefined);
 
   const navigate = useNavigate();
 
   const handleEmail = (e) => setEmail(e.target.value);
   const handlePassword = (e) => setPassword(e.target.value);
-  const handleName = (e) => setName(e.target.value);
+  const handleUsername = (e) => setUsername(e.target.value);
 
   const handleSignupSubmit = (e) => {
     e.preventDefault();
     // Create an object representing the request body
-    const requestBody = { email, password, name };
+    const requestBody = { email, password, username };
 
     // Make an axios request to the API
     // If POST request is successful redirect to login page
@@ -82,17 +82,17 @@ function SignupPage() {
         />
 
         <label
-          htmlFor="name"
+          htmlFor="username"
           className="text-gray-600 text-left ml-1 -mb-2 text-l font-bold"
         >
-          Name
+          Username
         </label>
         <input
           type="text"
-          name="name"
+          name="username"
           id="name"
-          value={name}
-          onChange={handleName}
+          value={username}
+          onChange={handleUsername}
           className="border rounded p-2 w-full mb-6"
           autoComplete="off"
         />
