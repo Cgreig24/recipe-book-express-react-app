@@ -1,4 +1,4 @@
-const jwt = require("jsonwebtoken");
+import jwt from "jsonwebtoken";
 
 // Instantiate the JWT token validation middleware
 const isAuthenticated = (req, res, next) => {
@@ -25,6 +25,4 @@ const isAuthenticated = (req, res, next) => {
 };
 
 // Export the middleware so that we can use it to create protected routes
-module.exports = {
-  isAuthenticated,
-};
+export default isAuthenticated;

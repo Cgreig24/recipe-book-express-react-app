@@ -1,11 +1,11 @@
-const express = require("express");
-const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
-const User = require("../models/User.model");
+import express from "express";
+import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
+import User from "../models/User.model.js";
 
-const router = require("express").Router();
+import isAuthenticated from "../middleware/jwt.middleware.js";
 
-const { isAuthenticated } = require("./../middleware/jwt.middleware.js");
+const router = express.Router();
 const saltRounds = 10;
 
 // POST  /auth/signup
@@ -126,4 +126,4 @@ router.get("/verify", isAuthenticated, (req, res, next) => {
   res.status(200).json(req.payload);
 });
 
-module.exports = router;
+export default router;

@@ -1,3 +1,5 @@
+{
+  /* 
 var request = require("request");
 clientID = "da242d57822840bfa608a886cab39c21";
 clientSecret = "22d1da2c44ad4b2985fa939855171d07";
@@ -18,8 +20,11 @@ var options = {
   json: true,
 };
 
+
 request(options, function (error, response, body) {
   if (error) throw new Error(error);
 
   console.log(body);
 });
+*/
+}

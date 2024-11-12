@@ -3,9 +3,16 @@ import mongoose from "mongoose";
 const RecipeSchema = new mongoose.Schema({
   title: String,
   image: String,
+  uri: String,
+  recipeId: String,
   ingredients: [String],
+  servings: String,
   source: String,
   url: String,
+  dishType: [String],
+  cuisineType: [String],
+  healthLabels: [String],
+  apiLink: String,
 });
 
 // Named export for RecipeSchema

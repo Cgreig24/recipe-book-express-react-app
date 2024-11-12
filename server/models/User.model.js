@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 const { Schema, model } = mongoose;
 
 // CREATE SCHEMA
@@ -13,4 +13,8 @@ const userSchema = new Schema({
   name: { type: String, required: true },
 });
 
-module.exports = model("User", userSchema);
+export { userSchema };
+
+// Default export for Recipe model
+const User = mongoose.model("User", userSchema);
+export default User;

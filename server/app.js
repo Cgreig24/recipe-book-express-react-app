@@ -1,13 +1,8 @@
 import dotenv from "dotenv";
 dotenv.config();
-//const express = require("express");
 import express from "express";
-//const morgan = require("morgan");
 import morgan from "morgan";
-//const cookieParser = require("cookie-parser");
 import cookieParser from "cookie-parser";
-
-//const cors = require("cors");
 import cors from "cors";
 
 import { fileURLToPath } from "url";
@@ -16,6 +11,7 @@ import axios from "axios";
 import mongoose from "mongoose";
 import Recipe, { RecipeSchema } from "./models/Recipe.model.js";
 import connectDB from "./db.js";
+import isAuthenticated from "./middleware/jwt.middleware.js";
 const app = express();
 const PORT = process.env.VITE_PORT;
 const apiKey = process.env.VITE_APP_KEY;
@@ -46,6 +42,13 @@ app.get("/docs", (req, res) => {
   res.sendFile(__dirname + "/views/docs.html");
 });
 
+import authRouter from "./routes/auth.routes.js";
+app.use("/auth", authRouter);
+
+import userRouter from "./routes/user.routes.js";
+//const userRouter = require("./routes/user.routes");
+app.use("/api/users", isAuthenticated, userRouter);
+
 /*
 const options = {
   method: "GET",
@@ -66,15 +69,9 @@ const options = {
 //${req.params.query}
 
 {
-  /* 
-app.get("/recipes/:query", async (req, res) => {
-  const response = await axios.get(
+  /*
+Previous link
     `https://api.edamam.com/search?q=${req.params.query}&app_id=${process.env.VITE_APP_ID}&app_key=${process.env.VITE_APP_KEY}`
-  );
-  console.log(response.data.hits);
-  res.json(response.data.hits);
-});
-
 */
 }
 
@@ -94,18 +91,25 @@ app.post("/fetch-recipes/:recipeid", async (req, res) => {
   try {
     const response = await axios.get(recipeUrl);
     console.log(response);
-    const recipeData = response.data.recipe; // Assuming response contains an array of recipes
+    const recipeData = response.data; // Assuming response contains an array of recipes
 
     if (!recipeData) {
       return res.status(400).json({ error: "No recipe data found" });
     }
 
     const newRecipe = await Recipe.create({
-      title: recipeData.label,
-      image: recipeData.image,
-      ingredients: recipeData.ingredientLines,
-      source: recipeData.source, // Or any other field containing instructions
-      url: recipeData.url,
+      title: recipeData.recipe.label,
+      image: recipeData.recipe.image,
+      uri: recipeData.recipe.uri,
+      recipeId: recipeData.recipe.uri.split("#recipe_")[1],
+      ingredients: recipeData.recipe.ingredientLines,
+      source: recipeData.recipe.source, // Or any other field containing instructions
+      url: recipeData.recipe.url,
+      servings: recipeData.recipe.yield,
+      dishType: recipeData.recipe.dishType,
+      cuisineType: recipeData.recipe.cuisineType,
+      healthLabels: recipeData.recipe.healthLabels,
+      apiLink: recipeData._links.self.href,
     });
 
     res
@@ -126,24 +130,6 @@ app.get("/recipes/:recipeid", async (req, res) => {
   console.log(response.data.hits);
   res.json(response.data.hits);
 });
-*/
-}
-
-/*
-const { uri } =
-  "http://www.edamam.com/ontologies/edamam.owl#recipe_3f40351ef85b4323b4c9bf654355cafe";
-*/
-
-{
-  /* 
-app.get("/recipes/:uri", async (req, res) => {
-  const response = await axios.get(
-    `https://api.edamam.com/api/recipes/v2/by-uri?type=public&uri=${uri}&app_id=${process.env.VITE_APP_ID}&app_key=${process.env.VITE_APP_KEY}`
-  );
-  console.log(response.data);
-  res.json(response.data);
-});
-
 */
 }
 
