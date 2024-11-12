@@ -10,6 +10,11 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import RecipesPage from "./pages/RecipesPage";
 import FetchRecipe from "./pages/FetchRecipe";
+import LoginPage from "./pages/LoginPage";
+import SignupPage from "./pages/SignupPage";
+
+import IsPrivate from "./components/IsPrivate";
+import IsAnon from "./components/IsAnon";
 //import Search from "./components/Search";
 //import { Carousel } from "react-multi-carousel";
 //import "react-multi-carousel/lib/styles.css";
@@ -24,6 +29,8 @@ function App() {
             <Route path="/" element={<Homepage />} />
             <Route path="/recipes" element={<RecipesPage />} />
             <Route path="/fetch-recipes/:recipeid" element={<FetchRecipe />} />
+            <Route path="/signup" element={<SignupPage />} />
+            <Route path="/login" element={<LoginPage />} />
           </Routes>
         </div>
         <Footer />

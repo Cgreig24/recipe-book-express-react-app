@@ -4,7 +4,9 @@ export default function Navbar() {
   const navLinks = [
     { id: 1, to: "/", label: "Home" },
     { id: 2, to: "/yourbook", label: "Your Book" },
-    { id: 3, to: "/login", label: "Log In" },
+    { id: 3, to: "/recipes", label: "Recipes" },
+    { id: 4, to: "/login", label: "Log In" },
+    { id: 5, to: "/signup", label: "Sign Up" },
   ];
   return (
     <header className="navbar">

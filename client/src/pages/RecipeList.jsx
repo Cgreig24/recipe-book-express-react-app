@@ -25,13 +25,8 @@ const RecipeList = () => {
           <li key={index}>
             <h3>{recipe.title}</h3>
             <img src={recipe.image} alt={recipe.title} />
-            <p>Calories: {recipe.calories}</p>
             <p>Ingredients: {recipe.ingredients.join(", ")}</p>
-            <a
-              href={recipe.instructions}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
+            <a href={recipe.url} target="_blank" rel="noopener noreferrer">
               View Recipe
             </a>
           </li>

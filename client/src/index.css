@@ -105,6 +105,30 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
+.ingredientsContainer {
+  display: flex;
+  flex-direction: column;
+  width: 60%;
+  flex-wrap: wrap;
+  text-align: left;
+  > li {
+    list-style-type: none;
+  }
+}
+
+.instructionsSection {
+  display: flex;
+  justify-content: space-around;
+  > p {
+    background-color: yellow;
+  }
+
+  > a {
+    background-color: yellow;
+    line-height: 1;
+  }
+}
+
 .footer {
   background-color: #371965;
   color: white;

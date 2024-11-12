@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function RecipeFetcher() {
   const { recipeid } = useParams();
   const [recipeFetch, setRecipeFetch] = useState(null);
+
+  const navigate = useNavigate();
 
   const fetchRecipe = async () => {
     try {
@@ -28,17 +31,49 @@ function RecipeFetcher() {
           <div>
             <h2>{recipeFetch.title}</h2>
             <img src={recipeFetch.image} alt={recipeFetch.title} />
-            <p>{recipeFetch.ingredients.join(", ")}</p>
-            <a
-              href={recipeFetch.instructions}
-              target="_blank"
-              rel="noopener noreferrer"
+            <p>Serves: {recipeFetch.servings}</p>
+            <p>Course: {recipeFetch.dishType}</p>
+            <p>Cuisine: {recipeFetch.cuisineType}</p>
+
+            <ul className="ingredientsContainer">
+              {recipeFetch.ingredients.map((ingredient, index) => (
+                <li key={index}>{ingredient}</li>
+              ))}
+            </ul>
+            <div className="instructionsSection">
+              <p>Instructions provided by {recipeFetch.source}</p>
+              <p>
+                {" "}
+                <a
+                  href={recipeFetch.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  View Instructions
+                </a>
+              </p>
+            </div>
+            <button
+              className="backButton"
+              onClick={() => {
+                navigate(-1);
+              }}
             >
-              View Instructions
-            </a>
+              Back
+            </button>
           </div>
         ) : (
-          <p>Loading recipe...</p>
+          <div>
+            <p>Loading recipe...</p>
+            <button
+              className="backButton"
+              onClick={() => {
+                navigate(-1);
+              }}
+            >
+              Back
+            </button>
+          </div>
         )}
       </div>
     </>
