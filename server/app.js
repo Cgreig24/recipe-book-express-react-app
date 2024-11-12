@@ -11,6 +11,7 @@ import axios from "axios";
 import mongoose from "mongoose";
 import Recipe, { RecipeSchema } from "./models/Recipe.model.js";
 import connectDB from "./db.js";
+import YourRecipe from "./models/YourRecipe.model.js";
 import isAuthenticated from "./middleware/jwt.middleware.js";
 const app = express();
 const PORT = process.env.VITE_PORT;
@@ -46,27 +47,9 @@ import authRouter from "./routes/auth.routes.js";
 app.use("/auth", authRouter);
 
 import userRouter from "./routes/user.routes.js";
+
 //const userRouter = require("./routes/user.routes");
 app.use("/api/users", isAuthenticated, userRouter);
-
-/*
-const options = {
-  method: "GET",
-  url: "https://api.themoviedb.org/3/search/movie",
-  params: {
-    query: `${searchQuery}`,
-    include_adult: "false",
-    language: "en-US",
-    page: `${currentPage}`,
-  },
-  headers: {
-    accept: "application/json",
-    Authorization: `Bearer ${apiKey}`,
-  },
-};
-*/
-
-//${req.params.query}
 
 {
   /*
@@ -132,6 +115,38 @@ app.get("/recipes/:recipeid", async (req, res) => {
 });
 */
 }
+
+// Post data from MongoDB collection recipes into MongoDB collection
+app.post(
+  "/:userid/your-recipes/:recipeid",
+  isAuthenticated,
+  async (req, res) => {
+    const { recipeid } = req.params;
+    const { userId } = req.params;
+
+    console.log(recipeid, userId);
+
+    try {
+      const recipe = await Recipe.findOne({ recipeId: recipeid });
+
+      if (!recipe) {
+        return res.status(400).json({ error: "Recipe not found" });
+      }
+
+      const newYourRecipe = await YourRecipe.create({
+        ...recipe.toObject(),
+        userId: userId,
+      });
+      console.log(userId);
+      res
+        .status(200)
+        .json({ message: "Recipe saved successfully", data: newYourRecipe });
+    } catch (error) {
+      console.error("Error fetching and saving recipe", error);
+      res.status(500).json({ error: "Failed to fetch recipes" });
+    }
+  }
+);
 
 app.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}`);
