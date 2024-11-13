@@ -38,11 +38,11 @@ app.use(express.static("public"));
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-app.get("/");
+// app.get("/");
 
-app.get("/docs", (req, res) => {
-  res.sendFile(__dirname + "/views/docs.html");
-});
+// app.get("/docs", (req, res) => {
+//   res.sendFile(__dirname + "/views/docs.html");
+// });
 
 import authRouter from "./routes/auth.routes.js";
 app.use("/auth", authRouter);
@@ -63,7 +63,7 @@ app.get("/recipes/:query", async (req, res) => {
   const response = await axios.get(
     `https://api.edamam.com/api/recipes/v2?type=public&q=${req.params.query}&app_id=${process.env.VITE_APP_ID}&app_key=${process.env.VITE_APP_KEY}`
   );
-  console.log(response.data.hits);
+  // console.log(response.data.hits);
   res.json(response.data.hits);
 });
 
@@ -74,7 +74,7 @@ app.post("/fetch-recipes/:recipeid", async (req, res) => {
 
   try {
     const response = await axios.get(recipeUrl);
-    console.log(response);
+    // console.log(response);
     const recipeData = response.data; // Assuming response contains an array of recipes
 
     if (!recipeData) {

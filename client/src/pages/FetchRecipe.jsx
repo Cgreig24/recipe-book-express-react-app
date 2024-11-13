@@ -24,6 +24,7 @@ function RecipeFetcher() {
   };
 
   const addToYourRecipes = async () => {
+    console.log("user", user);
     if (!user) {
       console.log("User is not logged in");
       return;
@@ -33,7 +34,6 @@ function RecipeFetcher() {
       const token = localStorage.getItem("authToken");
       const response = await axios.post(
         `http://localhost:5012/${user}/your-recipes/${recipeid}`,
-        {},
         {
           headers: {
             Authorization: `Bearer ${token}`,

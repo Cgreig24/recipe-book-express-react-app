@@ -10,9 +10,9 @@ import isAuthenticated from "../middleware/jwt.middleware.js";
 const yourRecipesRouter = express.Router({ mergeParams: true });
 
 router.get("/:id", (req, res, next) => {
-  console.log(req.params);
+  // console.log(req.params);
   const { id } = req.params;
-  console.log(id);
+  // console.log(id);
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
     res.status(400).json({ message: "Specified id is not valid" });

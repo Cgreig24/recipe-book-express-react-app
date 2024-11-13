@@ -11,7 +11,7 @@ const isAuthenticated = (req, res, next) => {
 
     // Add payload to the request object as req.payload for use in next middleware or route
     req.payload = payload;
-
+    console.log("isAuthenticated:::::", req.payload);
     // Call next() to pass the request to the next middleware function or route
     next();
   } catch (error) {
