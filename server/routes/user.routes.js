@@ -1,11 +1,7 @@
 import express from "express";
-
 const router = express.Router();
 import mongoose from "mongoose";
-
 import User from "../models/User.model.js";
-import YourRecipe from "../models/YourRecipe.model.js";
-import Recipe from "../models/Recipe.model.js";
 import isAuthenticated from "../middleware/jwt.middleware.js";
 const yourRecipesRouter = express.Router({ mergeParams: true });
 
@@ -27,6 +23,8 @@ router.get("/:id", (req, res, next) => {
     .catch((error) => res.json(error));
 });
 
+{
+  /* 
 yourRecipesRouter.route("/").get(function (req, res) {
   res.status(200).send("hello items from user" + req.params.userid);
 });
@@ -48,5 +46,7 @@ router.get("/:userid", (req, res) => {
 router.get("/", isAuthenticated, (req, res) => {
   res.status(200).send("hello users");
 });
+*/
+}
 
 export default router;

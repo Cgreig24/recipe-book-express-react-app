@@ -7,11 +7,13 @@ import Homepage from "./pages/Homepage";
 
 import { Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
+import Sidebar from "./components/Sidebar";
 import Footer from "./components/Footer";
 import RecipesPage from "./pages/RecipesPage";
 import FetchRecipe from "./pages/FetchRecipe";
 import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
+import UserProfilePage from "./pages/UserProfilePage";
 
 import IsPrivate from "./components/IsPrivate";
 import IsAnon from "./components/IsAnon";
@@ -20,20 +22,34 @@ import IsAnon from "./components/IsAnon";
 //import "react-multi-carousel/lib/styles.css";
 
 function App() {
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
   return (
     <>
-      <Navbar />
-      <div className="appContainer">
-        <div className="content">
-          <Routes>
-            <Route path="/" element={<Homepage />} />
-            <Route path="/recipes" element={<RecipesPage />} />
-            <Route path="/fetch-recipes/:recipeid" element={<FetchRecipe />} />
-            <Route path="/signup" element={<SignupPage />} />
-            <Route path="/login" element={<LoginPage />} />
-          </Routes>
+      <div className="App relative z-20 pt-20">
+        <Navbar toggleSidebar={() => setIsSidebarOpen(!isSidebarOpen)} />
+        {isSidebarOpen && <Sidebar />}
+        <div
+          className={`content ${isSidebarOpen ? "shifted" : ""} relative z-10`}
+        >
+          <div className="appContainer">
+            <div className="content">
+              <Routes>
+                <Route path="/" element={<Homepage />} />
+                <Route path="/recipes" element={<RecipesPage />} />
+                <Route
+                  path="/fetch-recipes/:recipeid"
+                  element={<FetchRecipe />}
+                />
+                <Route path="/signup" element={<SignupPage />} />
+                <Route path="/login" element={<LoginPage />} />
+                <Route path="/profile" element={<UserProfilePage />} />
+              </Routes>
+            </div>
+
+            <Footer />
+          </div>
         </div>
-        <Footer />
       </div>
     </>
   );

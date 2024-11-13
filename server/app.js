@@ -114,6 +114,22 @@ app.post("/your-recipes/:recipeid", isAuthenticated, async (req, res) => {
   }
 });
 
+app.get("/api/user/:userid", isAuthenticated, async (req, res) => {
+  console.log(req.params);
+  const userid = req.payload._id;
+  try {
+    const user = await User.findById({ userid });
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    res.status(200).json(user);
+  } catch (error) {
+    console.error("Error while retrieving users ->", error);
+    res.status(500).json({ error: "Failed to retrieve user" });
+  }
+});
+
 app.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}`);
 });
