@@ -10,9 +10,9 @@ import isAuthenticated from "../middleware/jwt.middleware.js";
 const yourRecipesRouter = express.Router({ mergeParams: true });
 
 router.get("/:id", (req, res, next) => {
-  console.log(req.params);
+  // console.log(req.params);
   const { id } = req.params;
-  console.log(id);
+  // console.log(id);
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
     res.status(400).json({ message: "Specified id is not valid" });
@@ -27,16 +27,6 @@ router.get("/:id", (req, res, next) => {
     .catch((error) => res.json(error));
 });
 
-router.use("/:userid/items", yourRecipesRouter);
-
-router.route("/").get(function (req, res) {
-  res.status(200).send("hello users");
-});
-
-router.route("/:userid").get(function (req, res) {
-  res.status(200).send("hello user " + req.params.userid);
-});
-
 yourRecipesRouter.route("/").get(function (req, res) {
   res.status(200).send("hello items from user" + req.params.userid);
 });
@@ -47,6 +37,16 @@ yourRecipesRouter.route("/:recipeid").get(function (req, res) {
     .send(
       "hello item " + req.params.recipeid + "from user " + req.params.userid
     );
+});
+
+router.use("/:userid/recipes", yourRecipesRouter);
+
+router.get("/:userid", (req, res) => {
+  res.status(200).send("hello user " + req.params.userid);
+});
+
+router.get("/", isAuthenticated, (req, res) => {
+  res.status(200).send("hello users");
 });
 
 export default router;

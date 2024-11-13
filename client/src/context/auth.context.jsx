@@ -1,9 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import axios from "axios";
 
-// Import the string from the .env with URL of the API/server - http://localhost:5005
-const API_URL = import.meta.env.VITE_API_URL;
-
 const AuthContext = React.createContext();
 
 function AuthProviderWrapper(props) {
@@ -17,37 +14,28 @@ function AuthProviderWrapper(props) {
   };
 
   const authenticateUser = () => {
-    // Get the stored token from the localStorage
     const storedToken = localStorage.getItem("authToken");
-
-    // If the token exists in the localStorage
     if (storedToken) {
-      // We must send the JWT token in the request's "Authorization" Headers
       axios
-        .get(`${API_URL}/auth/verify`, {
+        .get(`${import.meta.env.VITE_API_URL}/auth/verify`, {
           headers: { Authorization: `Bearer ${storedToken}` },
         })
         .then((response) => {
-          // If the server verifies that JWT token is valid
-          const user = response.data;
-          // Update state variables
+          const fetchedUser = response;
           setIsLoggedIn(true);
           setIsLoading(false);
-          setUser(user);
+          setUser(fetchedUser);
         })
         .catch((error) => {
           if (error) {
             setAuthError(error.response.data.message);
             return;
           }
-          // If the server sends an error response (invalid token)
-          // Update state variables
           setIsLoggedIn(false);
           setIsLoading(false);
           setUser(null);
         });
     } else {
-      // If the token is not available
       setIsLoggedIn(false);
       setIsLoading(false);
       setUser(null);
@@ -55,7 +43,6 @@ function AuthProviderWrapper(props) {
   };
 
   const removeToken = () => {
-    // Upon logout, remove the token from the localStorage
     localStorage.removeItem("authToken");
   };
 
@@ -65,8 +52,6 @@ function AuthProviderWrapper(props) {
   };
 
   useEffect(() => {
-    // Run the function after the initial render,
-    // after the components in the App render for the first time.
     authenticateUser();
   }, []);
 

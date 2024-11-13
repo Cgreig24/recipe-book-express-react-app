@@ -13,7 +13,7 @@ const YourRecipeSchema = new mongoose.Schema({
   cuisineType: [String],
   healthLabels: [String],
   apiLink: String,
-  userId: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+  userId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
 });
 
 // Named export for RecipeSchema
