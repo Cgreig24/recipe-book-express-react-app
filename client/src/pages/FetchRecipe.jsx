@@ -33,7 +33,8 @@ function RecipeFetcher() {
     try {
       const token = localStorage.getItem("authToken");
       const response = await axios.post(
-        `http://localhost:5012/${user}/your-recipes/${recipeid}`,
+        `http://localhost:5012/your-recipes/${recipeid}`,
+        {},
         {
           headers: {
             Authorization: `Bearer ${token}`,

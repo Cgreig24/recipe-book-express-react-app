@@ -4,60 +4,28 @@ import express from "express";
 import morgan from "morgan";
 import cookieParser from "cookie-parser";
 import cors from "cors";
-
-import { fileURLToPath } from "url";
-import { dirname } from "path";
 import axios from "axios";
-import mongoose from "mongoose";
 import Recipe, { RecipeSchema } from "./models/Recipe.model.js";
 import connectDB from "./db.js";
 import YourRecipe from "./models/YourRecipe.model.js";
 import isAuthenticated from "./middleware/jwt.middleware.js";
 import User from "./models/User.model.js";
+
 const app = express();
 const PORT = process.env.VITE_PORT;
-const apiKey = process.env.VITE_APP_KEY;
-const apiBaseURL = process.env.VITE_BASE_URL;
-const apiId = process.env.VITE_APP_ID;
 
 connectDB();
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-
 app.use(cors());
-
-// mongoose
-//   .connect("mongodb://127.0.0.1:27017/recipe-book-app")
-//   .then((x) => console.log(`Connected to Database: "${x.connections[0].name}"`))
-//   .catch((err) => console.error("Error connecting to MongoDB", err));
-
 app.use(express.json());
 app.use(morgan("dev"));
-app.use(express.static("public"));
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-
-// app.get("/");
-
-// app.get("/docs", (req, res) => {
-//   res.sendFile(__dirname + "/views/docs.html");
-// });
 
 import authRouter from "./routes/auth.routes.js";
 app.use("/auth", authRouter);
 
 import userRouter from "./routes/user.routes.js";
-
-//const userRouter = require("./routes/user.routes");
 app.use("/api/user", isAuthenticated, userRouter);
-
-{
-  /*
-Previous link
-    `https://api.edamam.com/search?q=${req.params.query}&app_id=${process.env.VITE_APP_ID}&app_key=${process.env.VITE_APP_KEY}`
-*/
-}
 
 app.get("/recipes/:query", async (req, res) => {
   const response = await axios.get(
@@ -118,30 +86,25 @@ app.get("/recipes/:recipeid", async (req, res) => {
 }
 
 // Post data from MongoDB collection recipes into MongoDB collection
-app.post("/user/your-recipes/:recipeid", isAuthenticated, async (req, res) => {
-  const { userId, recipeid } = req.params;
+app.post("/your-recipes/:recipeid", isAuthenticated, async (req, res) => {
+  console.log("req.headers.authorization", req.headers.authorization);
+  const { recipeid } = req.params;
   console.log("payload::::::", req.payload);
-  console.log(recipeid, userId);
-  return;
-  if (req.payload._id !== userId) {
-    return res.status(403).json({ error: "User not authorized" });
-  }
-
+  console.log(recipeid);
+  // if (req.payload._id !== userId) {
+  //   return res.status(403).json({ error: "User not authorized" });
+  // }
   try {
     const recipe = await Recipe.findOne({ recipeId: recipeid });
-
     if (!recipe) {
       return res.status(400).json({ error: "Recipe not found" });
     }
-
+    const { _id, ...newRecipe } = recipe.toObject();
     const newYourRecipe = await YourRecipe.create({
-      ...recipe.toObject(),
-      userId: userId,
+      ...newRecipe,
+      userId: req.payload._id,
     });
-
     await newYourRecipe.save();
-
-    console.log(userId);
     res
       .status(200)
       .json({ message: "Recipe saved successfully", data: newYourRecipe });
