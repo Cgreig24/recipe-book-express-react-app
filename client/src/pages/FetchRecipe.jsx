@@ -8,6 +8,7 @@ function RecipeFetcher() {
   const { recipeid } = useParams();
   const [recipeFetch, setRecipeFetch] = useState(null);
   const { user } = useContext(AuthContext);
+  const userId = user._id;
 
   const navigate = useNavigate();
 
@@ -31,7 +32,7 @@ function RecipeFetcher() {
     try {
       const token = localStorage.getItem("authToken");
       const response = await axios.post(
-        `http://localhost:5012/${user._id}/your-recipes/${recipeid}`,
+        `http://localhost:5012/${user}/your-recipes/${recipeid}`,
         {},
         {
           headers: {

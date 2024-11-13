@@ -2,10 +2,7 @@ import mongoose from "mongoose";
 
 const connectDB = async () => {
   try {
-    await mongoose.connect("mongodb://localhost:27017/recipe-book-app", {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
+    await mongoose.connect("mongodb://localhost:27017/recipe-book-app");
     console.log("MongoDB connected");
   } catch (err) {
     console.error(err);
