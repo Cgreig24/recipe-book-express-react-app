@@ -16,14 +16,6 @@ function Sidebar() {
         </li>
         <li>
           <Link
-            to="/students"
-            className={location.pathname === "/students" ? "active" : ""}
-          >
-            Students
-          </Link>
-        </li>
-        <li>
-          <Link
             to="/profile"
             className={location.pathname === "/profile" ? "active" : ""}
           >

@@ -14,6 +14,8 @@ import FetchRecipe from "./pages/FetchRecipe";
 import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
 import UserProfilePage from "./pages/UserProfilePage";
+import YourRecipes from "./pages/YourRecipes";
+import YourRecipeDetails from "./pages/YourRecipesDetails";
 
 import IsPrivate from "./components/IsPrivate";
 import IsAnon from "./components/IsAnon";
@@ -44,6 +46,11 @@ function App() {
                 <Route path="/signup" element={<SignupPage />} />
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/profile" element={<UserProfilePage />} />
+                <Route path="/your-recipes" element={<YourRecipes />} />
+                <Route
+                  path="/your-recipes/:recipeid"
+                  element={<YourRecipeDetails />}
+                />
               </Routes>
             </div>
 

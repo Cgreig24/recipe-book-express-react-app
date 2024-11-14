@@ -130,6 +130,60 @@ app.get("/api/user/:userid", isAuthenticated, async (req, res) => {
   }
 });
 
+app.get("/your-recipes/", isAuthenticated, async (req, res) => {
+  try {
+    const userId = req.payload._id;
+
+    const recipes = await YourRecipe.find({ userId });
+
+    if (!recipes || recipes.length === 0) {
+      return res
+        .status(404)
+        .json({ message: "No recipes found for this user" });
+    }
+    res.status(200).json({ data: recipes });
+  } catch (error) {
+    console.error("Error fetching users recipes", error);
+    res.status(500).json({ error: "Failed to fetch recipes" });
+  }
+});
+
+app.get("/your-recipes/:recipeid", isAuthenticated, async (req, res) => {
+  try {
+    const { recipeid } = req.params;
+    const recipe = await YourRecipe.findOne({ _id: recipeid });
+    if (!recipe) {
+      return res.status(404).json({ error: "recipe not found" });
+    }
+    res.status(200).json({ data: recipe });
+  } catch (error) {
+    console.error("Error fetching recipe", error);
+    res.status(500).json({ error: "Failed to fetch recipe" });
+  }
+});
+
+app.delete("/your-recipes/:recipeid", isAuthenticated, async (req, res) => {
+  try {
+    const { recipeid } = req.params;
+    const userId = req.payload._id;
+    const recipe = await YourRecipe.findByIdAndDelete({
+      _id: recipeid,
+    });
+
+    if (!recipe) {
+      return res
+        .status(404)
+        .json({ error: "Recipe not found or not authorized" });
+    }
+
+    await recipe.delete();
+    res.status(204).send();
+  } catch (error) {
+    console.error("Error while retrieving recipe", error);
+    res.status(500).json({ error: "Failed to delete recipe" });
+  }
+});
+
 app.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}`);
 });
