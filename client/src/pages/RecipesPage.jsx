@@ -27,7 +27,7 @@ function RecipeDeets() {
 
   const handleRecipeClick = (recipe) => {
     const recipeid = recipe.uri.split("#recipe_")[1];
-    navigate(`/fetch-recipes/${recipeid}`);
+    navigate(`/recipes/${recipeid}`);
   };
 
   return (

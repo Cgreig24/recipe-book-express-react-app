@@ -15,7 +15,7 @@ function RecipeFetcher() {
   const fetchRecipe = async () => {
     try {
       const response = await axios.post(
-        `http://localhost:5012/fetch-recipes/${recipeid}`
+        `http://localhost:5012/recipes/${recipeid}`
       );
       setRecipeFetch(response.data.data);
     } catch (error) {

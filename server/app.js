@@ -36,7 +36,7 @@ app.get("/recipes/:query", async (req, res) => {
 });
 
 // Fetch data from Edamam API and save it to MongoDB
-app.post("/fetch-recipes/:recipeid", async (req, res) => {
+app.post("/recipes/:recipeid", async (req, res) => {
   const { recipeid } = req.params;
   const recipeUrl = `https://api.edamam.com/api/recipes/v2/${recipeid}?type=public&app_id=${process.env.VITE_APP_ID}&app_key=${process.env.VITE_APP_KEY}`;
 
@@ -130,6 +130,7 @@ app.get("/api/user/:userid", isAuthenticated, async (req, res) => {
   }
 });
 
+//fetch recipes for /your-recipes list
 app.get("/your-recipes/", isAuthenticated, async (req, res) => {
   try {
     const userId = req.payload._id;
@@ -148,6 +149,7 @@ app.get("/your-recipes/", isAuthenticated, async (req, res) => {
   }
 });
 
+//fetch recipes for your-recipes details page
 app.get("/your-recipes/:recipeid", isAuthenticated, async (req, res) => {
   try {
     const { recipeid } = req.params;
@@ -162,6 +164,7 @@ app.get("/your-recipes/:recipeid", isAuthenticated, async (req, res) => {
   }
 });
 
+//Delete recipes from /your-recipes
 app.delete("/your-recipes/:recipeid", isAuthenticated, async (req, res) => {
   try {
     const { recipeid } = req.params;
@@ -183,6 +186,31 @@ app.delete("/your-recipes/:recipeid", isAuthenticated, async (req, res) => {
   } catch (error) {
     console.error("Error while retrieving recipe", error);
     res.status(500).json({ error: "Failed to delete recipe" });
+  }
+});
+
+//add additional notes
+app.patch("/your-recipes/:recipeid", isAuthenticated, async (req, res) => {
+  const { recipeid } = req.params;
+  const { notes } = req.body;
+
+  try {
+    const updatedRecipe = await YourRecipe.findByIdAndUpdate(
+      recipeid,
+      { notes },
+      { new: true }
+    );
+
+    if (!updatedRecipe) {
+      return res.status(404).json({ error: "Recipe not found" });
+    }
+
+    res
+      .status(200)
+      .json({ message: "Notes updated successfully", data: updatedRecipe });
+  } catch (error) {
+    console.error("Error updating notes:", error);
+    res.status(500).json({ error: "Failed to update notes" });
   }
 });
 

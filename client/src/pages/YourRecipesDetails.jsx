@@ -10,6 +10,7 @@ function YourRecipeDetails() {
   const [yourRecipeFetchDetails, setYourRecipeFetchDetails] = useState();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [notes, setNotes] = useState("");
   const navigate = useNavigate();
 
   const fetchYourRecipeDetails = async () => {
@@ -40,6 +41,26 @@ function YourRecipeDetails() {
       setLoading(false);
     }
   }, [recipeid, user]);
+
+  const handleSaveNotes = async () => {
+    try {
+      const response = await axios.patch(
+        `http://localhost:5012/your-recipes/${recipeid}`,
+        { notes },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+          },
+        }
+      );
+      if (response.status === 200) {
+        alert("Notes saves successfully");
+      }
+    } catch (error) {
+      console.error("Error saving notes:", error);
+      setError("Failed to save notes");
+    }
+  };
 
   const handleDelete = async () => {
     try {
@@ -78,7 +99,20 @@ function YourRecipeDetails() {
               <li key={index}>{ingredient}</li>
             ))}
           </ul>
+          <p>Notes: {yourRecipeFetchDetails.notes}</p>
+          <div>
+            <label htmlFor="notes">Additional Notes:</label>
+            <textarea
+              id="notes"
+              value={notes}
+              onChange={(e) => setNotes(e.target.value)}
+              rows="4"
+              cols="50"
+            />
+          </div>
+          <button onClick={handleSaveNotes}>Save Notes</button>
 
+          <button>Edit Recipe</button>
           <button onClick={handleDelete}>Remove from Recipe Book</button>
           <button
             className="backButton"

@@ -10,7 +10,7 @@ import Navbar from "./components/Navbar";
 import Sidebar from "./components/Sidebar";
 import Footer from "./components/Footer";
 import RecipesPage from "./pages/RecipesPage";
-import FetchRecipe from "./pages/FetchRecipe";
+import RecipeDetails from "./pages/RecipeDetails";
 import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
 import UserProfilePage from "./pages/UserProfilePage";
@@ -39,10 +39,7 @@ function App() {
               <Routes>
                 <Route path="/" element={<Homepage />} />
                 <Route path="/recipes" element={<RecipesPage />} />
-                <Route
-                  path="/fetch-recipes/:recipeid"
-                  element={<FetchRecipe />}
-                />
+                <Route path="/recipes/:recipeid" element={<RecipeDetails />} />
                 <Route path="/signup" element={<SignupPage />} />
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/profile" element={<UserProfilePage />} />
