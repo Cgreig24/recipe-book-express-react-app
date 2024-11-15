@@ -168,6 +168,7 @@ app.delete("/your-recipes/:recipeid", isAuthenticated, async (req, res) => {
     const userId = req.payload._id;
     const recipe = await YourRecipe.findByIdAndDelete({
       _id: recipeid,
+      userId: userId,
     });
 
     if (!recipe) {
@@ -176,7 +177,8 @@ app.delete("/your-recipes/:recipeid", isAuthenticated, async (req, res) => {
         .json({ error: "Recipe not found or not authorized" });
     }
 
-    await recipe.delete();
+    //await recipe.delete();
+
     res.status(204).send();
   } catch (error) {
     console.error("Error while retrieving recipe", error);

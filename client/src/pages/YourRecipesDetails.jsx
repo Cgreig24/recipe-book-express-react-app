@@ -39,20 +39,30 @@ function YourRecipeDetails() {
       setError("User not authenticated");
       setLoading(false);
     }
-  }, [recipeid]);
+  }, [recipeid, user]);
 
-  const handleDelete = () => {
-    axios
-      .delete(`http://localhost:5012/your-recipes/${recipeid}`, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("authToken")}`,
-        },
-      })
-      .then(() => navigate(-1))
-      .catch((error) => {
-        console.error("Error deleting recipe:", error);
-        setError("Failed to remove recipe from your book");
-      });
+  const handleDelete = async () => {
+    try {
+      const response = await axios.delete(
+        `http://localhost:5012/your-recipes/${recipeid}`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+          },
+        }
+      );
+
+      if (response.status == 204) {
+        console.log("Recipe deleted successfully, navigating back.");
+        navigate("/your-recipes");
+      } else {
+        console.error("Unexpected response from delete request:", response);
+        setError("Failed to delete the recipe, try again.");
+      }
+    } catch (error) {
+      console.error("Error deleting recipe:", error);
+      setError("Failed to remove recipe from your book");
+    }
   };
 
   return (
