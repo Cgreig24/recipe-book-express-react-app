@@ -63,6 +63,7 @@ function RecipeFetcher() {
             <p>Serves: {recipeFetch.servings}</p>
             <p>Course: {recipeFetch.dishType}</p>
             <p>Cuisine: {recipeFetch.cuisineType}</p>
+            <p>Time to make: {recipeFetch.totalTime}</p>
 
             <ul className="ingredientsContainer">
               {recipeFetch.ingredients.map((ingredient, index) => (

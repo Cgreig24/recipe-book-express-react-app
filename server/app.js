@@ -61,6 +61,7 @@ app.post("/recipes/:recipeid", async (req, res) => {
       dishType: recipeData.recipe.dishType,
       cuisineType: recipeData.recipe.cuisineType,
       healthLabels: recipeData.recipe.healthLabels,
+      totalTime: recipeData.recipe.totalTime,
       apiLink: recipeData._links.self.href,
     });
 
@@ -192,22 +193,29 @@ app.delete("/your-recipes/:recipeid", isAuthenticated, async (req, res) => {
 //add additional notes
 app.patch("/your-recipes/:recipeid", isAuthenticated, async (req, res) => {
   const { recipeid } = req.params;
-  const { notes } = req.body;
+  const { ingredients, notes } = req.body;
 
   try {
-    const updatedRecipe = await YourRecipe.findByIdAndUpdate(
-      recipeid,
-      { notes },
-      { new: true }
-    );
+    const recipe = await YourRecipe.findById(recipeid);
 
-    if (!updatedRecipe) {
+    if (!recipe) {
       return res.status(404).json({ error: "Recipe not found" });
     }
 
-    res
-      .status(200)
-      .json({ message: "Notes updated successfully", data: updatedRecipe });
+    if (ingredients) {
+      recipe.ingredients = ingredients;
+    }
+
+    if (notes) {
+      recipe.notes.push(notes);
+    }
+
+    await recipe.save();
+
+    res.status(200).json({
+      message: "Notes updated successfully",
+      data: recipe,
+    });
   } catch (error) {
     console.error("Error updating notes:", error);
     res.status(500).json({ error: "Failed to update notes" });

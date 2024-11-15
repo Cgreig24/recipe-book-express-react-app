@@ -11,6 +11,8 @@ function YourRecipeDetails() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [notes, setNotes] = useState("");
+  const [newIngredient, setNewIngredient] = useState("");
+  const [ingredientToEdit, setIngredientToEdit] = useState(null);
   const navigate = useNavigate();
 
   const fetchYourRecipeDetails = async () => {
@@ -54,11 +56,94 @@ function YourRecipeDetails() {
         }
       );
       if (response.status === 200) {
+        fetchYourRecipeDetails();
+        setNotes("");
         alert("Notes saves successfully");
       }
     } catch (error) {
       console.error("Error saving notes:", error);
       setError("Failed to save notes");
+    }
+  };
+
+  const handleAddIngredient = async () => {
+    if (!newIngredient) return;
+
+    const updatedIngredients = [
+      ...yourRecipeFetchDetails.ingredients,
+      newIngredient,
+    ];
+
+    try {
+      const response = await axios.patch(
+        `http://localhost:5012/your-recipes/${recipeid}`,
+        { ingredients: updatedIngredients },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+          },
+        }
+      );
+      if (response.status === 200) {
+        fetchYourRecipeDetails();
+        setNewIngredient("");
+      }
+    } catch (error) {
+      console.error("Error adding ingredient:", error);
+      setError("Failed to add ingredient");
+    }
+  };
+
+  const handleEditIngredient = async (index) => {
+    const updatedIngredients = [...yourRecipeFetchDetails.ingredients];
+    updatedIngredients[index] = ingredientToEdit;
+
+    try {
+      const resposne = await axios.patch(
+        `http://localhost:5012/your-recipes/${recipeid}`,
+        { ingredients: updatedIngredients },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+          },
+        }
+      );
+      if (response.status === 200) {
+        fetchYourRecipeDetails();
+        setIngredientToEdit(null);
+      }
+    } catch (error) {
+      console.error("Error editing ingredient:", error);
+      setError("Failed to edit ingredient");
+    }
+  };
+
+  const handleRemoveIngredient = async (index) => {
+    const confirmRemove = window.confirm(
+      "Are you sure you want to remove this ingredient?"
+    );
+    if (confirmRemove) {
+      const updatedIngredients = yourRecipeFetchDetails.ingredients.filter(
+        (_, i) => i !== index
+      );
+
+      try {
+        const response = await axios.patch(
+          `http://localhost:5012/your-recipes/${recipeid}`,
+          { ingredients: updatedIngredients },
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+            },
+          }
+        );
+        if (response.status === 200) {
+          fetchYourRecipeDetails();
+        }
+      } catch (error) {
+        console.error("Error removing ingredient:", error);
+        setError("Failed to remove ingredient");
+      }
     }
   };
 
@@ -94,12 +179,53 @@ function YourRecipeDetails() {
           <img src={yourRecipeFetchDetails.image} />
           <p>{yourRecipeFetchDetails.dishType}</p>
           <p>{yourRecipeFetchDetails.cuisineType}</p>
+          <p>{yourRecipeFetchDetails.totalTime}</p>
           <ul className="ingredientsContainer">
             {yourRecipeFetchDetails.ingredients.map((ingredient, index) => (
-              <li key={index}>{ingredient}</li>
+              <li key={index}>
+                {ingredientToEdit === index ? (
+                  <input
+                    type="text"
+                    value={ingredientToEdit}
+                    onChange={(e) => setIngredientToEdit(e.target.value)}
+                  />
+                ) : (
+                  <>
+                    {ingredient}{" "}
+                    <button onClick={() => setIngredientToEdit(index)}>
+                      Edit
+                    </button>
+                    <button onClick={() => handleRemoveIngredient(index)}>
+                      Remove
+                    </button>
+                  </>
+                )}
+
+                {ingredientToEdit === index && (
+                  <button onClick={() => handleEditIngredient(index)}>
+                    Save
+                  </button>
+                )}
+              </li>
             ))}
           </ul>
-          <p>Notes: {yourRecipeFetchDetails.notes}</p>
+
+          <div>
+            <label htmlFor="new-ingredient">Add New Ingredient:</label>
+            <input
+              type="text"
+              id="new-ingredient"
+              value={newIngredient}
+              onChange={(e) => setNewIngredient(e.target.value)}
+            />
+            <button onClick={handleAddIngredient}>Add Ingredient</button>
+          </div>
+          <p>Notes:</p>
+          <ul>
+            {yourRecipeFetchDetails.notes.map((note, index) => (
+              <li key={index}>{note}</li>
+            ))}
+          </ul>
           <div>
             <label htmlFor="notes">Additional Notes:</label>
             <textarea

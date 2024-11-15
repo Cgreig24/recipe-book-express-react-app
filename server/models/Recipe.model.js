@@ -12,6 +12,7 @@ const RecipeSchema = new mongoose.Schema({
   dishType: [String],
   cuisineType: [String],
   healthLabels: [String],
+  totalTime: String,
   apiLink: String,
 });
 
