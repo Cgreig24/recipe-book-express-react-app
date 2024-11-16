@@ -65,7 +65,7 @@ function RecipeFetcher() {
             <p>Cuisine: {recipeFetch.cuisineType}</p>
             <p>Time to make: {recipeFetch.totalTime}</p>
 
-            <ul className="ingredientsContainer">
+            <ul className="ingredientsListContainer">
               {recipeFetch.ingredients.map((ingredient, index) => (
                 <li key={index}>{ingredient}</li>
               ))}

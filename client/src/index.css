@@ -105,7 +105,25 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
-.ingredientsContainer {
+.recipeDetailsQuickHits {
+  display: flex;
+  justify-content: space-around;
+  width: 80%;
+  text-transform: capitalize;
+}
+
+.IngredientsSection {
+  display: flex;
+  flex-direction: column;
+  width: 60%;
+  flex-wrap: wrap;
+  text-align: left;
+  > li {
+    list-style-type: none;
+  }
+}
+
+.ingredientsListContainer {
   display: flex;
   flex-direction: column;
   width: 60%;
@@ -126,6 +144,32 @@ button:focus-visible {
   > a {
     background-color: yellow;
     line-height: 1;
+  }
+}
+
+.instructionsHeader {
+  text-align: left;
+}
+
+.yourRecipesInstructions {
+  display: flex;
+  justify-content: space-around;
+  > p {
+  }
+
+  > a {
+    line-height: 1;
+  }
+}
+
+.notesSection {
+  display: flex;
+  flex-direction: column;
+  width: 60%;
+  flex-wrap: wrap;
+  text-align: left;
+  > li {
+    list-style-type: none;
   }
 }
 

@@ -99,7 +99,7 @@ function YourRecipeDetails() {
     updatedIngredients[index] = ingredientToEdit;
 
     try {
-      const resposne = await axios.patch(
+      const response = await axios.patch(
         `http://localhost:5012/your-recipes/${recipeid}`,
         { ingredients: updatedIngredients },
         {
@@ -177,68 +177,94 @@ function YourRecipeDetails() {
         <div>
           <h2>{yourRecipeFetchDetails.title}</h2>
           <img src={yourRecipeFetchDetails.image} />
-          <p>{yourRecipeFetchDetails.dishType}</p>
-          <p>{yourRecipeFetchDetails.cuisineType}</p>
-          <p>{yourRecipeFetchDetails.totalTime}</p>
-          <ul className="ingredientsContainer">
-            {yourRecipeFetchDetails.ingredients.map((ingredient, index) => (
-              <li key={index}>
-                {ingredientToEdit === index ? (
-                  <input
-                    type="text"
-                    value={ingredientToEdit}
-                    onChange={(e) => setIngredientToEdit(e.target.value)}
-                  />
-                ) : (
-                  <>
-                    {ingredient}{" "}
-                    <button onClick={() => setIngredientToEdit(index)}>
-                      Edit
-                    </button>
-                    <button onClick={() => handleRemoveIngredient(index)}>
-                      Remove
-                    </button>
-                  </>
-                )}
+          <div className="recipeDetailsQuickHits">
+            <p>{yourRecipeFetchDetails.dishType}</p>
+            <p>{yourRecipeFetchDetails.cuisineType}</p>
+            <p>{yourRecipeFetchDetails.servings}</p>
+            <p>{yourRecipeFetchDetails.totalTime}</p>
+          </div>
+          <div className="IngredientsSection">
+            <h3>Ingredients</h3>
+            <button>Edit Ingredients</button>
+            <ul className="ingredientsListContainer">
+              {yourRecipeFetchDetails.ingredients.map((ingredient, index) => (
+                <li key={index}>
+                  {ingredientToEdit === index ? (
+                    <input
+                      type="text"
+                      placeholder="foo"
+                      value={ingredientToEdit}
+                      onChange={(e) => setIngredientToEdit(e.target.value)}
+                    />
+                  ) : (
+                    <>
+                      {ingredient}{" "}
+                      <button onClick={() => setIngredientToEdit(index)}>
+                        Edit
+                      </button>
+                      <button onClick={() => handleRemoveIngredient(index)}>
+                        Remove
+                      </button>
+                    </>
+                  )}
 
-                {ingredientToEdit === index && (
-                  <button onClick={() => handleEditIngredient(index)}>
-                    Save
-                  </button>
-                )}
-              </li>
-            ))}
-          </ul>
+                  {ingredientToEdit === index && (
+                    <button onClick={() => handleEditIngredient(index)}>
+                      Save
+                    </button>
+                  )}
+                </li>
+              ))}
+            </ul>
+
+            <div>
+              <input
+                type="text"
+                id="new-ingredient"
+                placeholder="Add extra ingredient..."
+                value={newIngredient}
+                onChange={(e) => setNewIngredient(e.target.value)}
+              />
+              <button onClick={handleAddIngredient}>Add</button>
+            </div>
+          </div>
 
           <div>
-            <label htmlFor="new-ingredient">Add New Ingredient:</label>
-            <input
-              type="text"
-              id="new-ingredient"
-              value={newIngredient}
-              onChange={(e) => setNewIngredient(e.target.value)}
-            />
-            <button onClick={handleAddIngredient}>Add Ingredient</button>
+            <h3 className="instructionsHeader">Instructions</h3>
+            <div className="yourRecipesInstructions">
+              <p>Instructions provided by {yourRecipeFetchDetails.source}</p>
+              <p>
+                {" "}
+                <a
+                  href={yourRecipeFetchDetails.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  View Instructions
+                </a>
+              </p>
+            </div>
           </div>
-          <p>Notes:</p>
-          <ul>
-            {yourRecipeFetchDetails.notes.map((note, index) => (
-              <li key={index}>{note}</li>
-            ))}
-          </ul>
-          <div>
-            <label htmlFor="notes">Additional Notes:</label>
-            <textarea
-              id="notes"
-              value={notes}
-              onChange={(e) => setNotes(e.target.value)}
-              rows="4"
-              cols="50"
-            />
+          <div className="notesSection">
+            <h3>Notes or suggestions</h3>
+            <ul>
+              {yourRecipeFetchDetails.notes.map((note, index) => (
+                <li key={index}>{note}</li>
+              ))}
+            </ul>
+            <div>
+              <textarea
+                id="notes"
+                placeholder="Add additional notes here..."
+                value={notes}
+                onChange={(e) => setNotes(e.target.value)}
+                rows="4"
+                cols="50"
+              />
+            </div>
+            <button onClick={handleSaveNotes}>Save</button>
           </div>
-          <button onClick={handleSaveNotes}>Save Notes</button>
 
-          <button>Edit Recipe</button>
           <button onClick={handleDelete}>Remove from Recipe Book</button>
           <button
             className="backButton"
@@ -251,7 +277,7 @@ function YourRecipeDetails() {
         </div>
       ) : (
         <div>
-          <h2>Nothing rendered</h2>
+          <h2>Nothing loaded</h2>
           <button>Remove from Recipe Book</button>
         </div>
       )}

@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 function RecipeDeets() {
   const [recipes, setRecipes] = useState([]);
   const [search, setSearch] = useState([""]);
-  const [query, setQuery] = useState("chicken");
+  const [query, setQuery] = useState("");
   const navigate = useNavigate();
 
   const getRecipes = async () => {
@@ -59,8 +59,9 @@ function RecipeDeets() {
             </div>
           ))}
         </div>
-
+        {/*
         <RecipeList recipes={recipes} />
+         */}
       </div>
     </>
   );
