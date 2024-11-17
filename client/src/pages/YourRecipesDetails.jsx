@@ -58,7 +58,6 @@ function YourRecipeDetails() {
       if (response.status === 200) {
         fetchYourRecipeDetails();
         setNotes("");
-        alert("Notes saves successfully");
       }
     } catch (error) {
       console.error("Error saving notes:", error);
@@ -174,7 +173,7 @@ function YourRecipeDetails() {
   return (
     <>
       {yourRecipeFetchDetails ? (
-        <div>
+        <div className="bg-primary">
           <h2>{yourRecipeFetchDetails.title}</h2>
           <img src={yourRecipeFetchDetails.image} />
           <div className="recipeDetailsQuickHits">
@@ -258,16 +257,18 @@ function YourRecipeDetails() {
                 placeholder="Add additional notes here..."
                 value={notes}
                 onChange={(e) => setNotes(e.target.value)}
-                rows="4"
-                cols="50"
+                rows="3"
+                cols="70"
               />
             </div>
             <button onClick={handleSaveNotes}>Save</button>
           </div>
 
-          <button onClick={handleDelete}>Remove from Recipe Book</button>
+          <button className="btn btn-primary" onClick={handleDelete}>
+            Remove from Recipe Book
+          </button>
           <button
-            className="backButton"
+            className="btn btn-neutral"
             onClick={() => {
               navigate(-1);
             }}
@@ -278,7 +279,7 @@ function YourRecipeDetails() {
       ) : (
         <div>
           <h2>Nothing loaded</h2>
-          <button>Remove from Recipe Book</button>
+          <button className="btn btn-warning">Remove from Recipe Book</button>
         </div>
       )}
     </>

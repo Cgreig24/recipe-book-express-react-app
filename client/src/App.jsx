@@ -29,30 +29,26 @@ function App() {
   return (
     <>
       <div className="App relative z-20 pt-20">
-        <Navbar toggleSidebar={() => setIsSidebarOpen(!isSidebarOpen)} />
-        {isSidebarOpen && <Sidebar />}
-        <div
-          className={`content ${isSidebarOpen ? "shifted" : ""} relative z-10`}
-        >
-          <div className="appContainer">
-            <div className="content">
-              <Routes>
-                <Route path="/" element={<Homepage />} />
-                <Route path="/recipes" element={<RecipesPage />} />
-                <Route path="/recipes/:recipeid" element={<RecipeDetails />} />
-                <Route path="/signup" element={<SignupPage />} />
-                <Route path="/login" element={<LoginPage />} />
-                <Route path="/profile" element={<UserProfilePage />} />
-                <Route path="/your-recipes" element={<YourRecipes />} />
-                <Route
-                  path="/your-recipes/:recipeid"
-                  element={<YourRecipeDetails />}
-                />
-              </Routes>
-            </div>
+        <Navbar />
 
-            <Footer />
+        <div className="min-h-screen flex flex-col">
+          <div className="flex-grow">
+            <Routes>
+              <Route path="/" element={<Homepage />} />
+              <Route path="/recipes" element={<RecipesPage />} />
+              <Route path="/recipes/:recipeid" element={<RecipeDetails />} />
+              <Route path="/signup" element={<SignupPage />} />
+              <Route path="/login" element={<LoginPage />} />
+              <Route path="/profile" element={<UserProfilePage />} />
+              <Route path="/your-recipes" element={<YourRecipes />} />
+              <Route
+                path="/your-recipes/:recipeid"
+                element={<YourRecipeDetails />}
+              />
+            </Routes>
           </div>
+
+          <Footer />
         </div>
       </div>
     </>

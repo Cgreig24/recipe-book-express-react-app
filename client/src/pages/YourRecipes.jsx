@@ -51,7 +51,7 @@ function YourRecipes() {
               key={recipe._id}
               onClick={() => handleYourRecipeClick(recipe._id)}
             >
-              <h2>{recipe.title}</h2>
+              <h1 classname="">{recipe.title}</h1>
               <img src={recipe.image} />
               <p>{recipe.dishType}</p>
               <p>{recipe.cuisineType}</p>

@@ -84,7 +84,7 @@ function RecipeFetcher() {
               </p>
             </div>
             <button
-              className="addToYourRecipesButton"
+              className="btn btn-success"
               onClick={() => {
                 addToYourRecipes();
               }}
@@ -105,7 +105,7 @@ function RecipeFetcher() {
           <div>
             <p>Loading recipe...</p>
             <button
-              className="backButton"
+              className="btn btn-outline"
               onClick={() => {
                 navigate(-1);
               }}

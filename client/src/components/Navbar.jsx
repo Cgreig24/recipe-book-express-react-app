@@ -14,10 +14,45 @@ export default function Navbar({ toggleSidebar }) {
     { id: 6, to: "/profile", label: "User Profile" },
   ];
   return (
-    <header className="navbar">
-      <h1 className="navbarTitle">Recipe Book</h1>
-      <nav>
-        <div className="navlinksContainer">
+    <div className="navbar bg-accent fixed top-0 left-0 right-0 z-50">
+      <div className="flex-1">
+        <h1 className="btn btn-ghost text-xl">
+          <a href="/recipes">Recipe Book</a>
+        </h1>
+      </div>
+      <div>
+        <a href="/your-recipes" className="ml-6">
+          Your Recipes
+        </a>
+      </div>
+      <div>
+        <a href="/profile" className="ml-6">
+          Profile
+        </a>
+      </div>
+      <div className="w-1/4 flex justify-end mr-4">
+        {isLoggedIn && (
+          <button
+            className="btn-primary px-4 py-1 rounded hover:bg-blue-400"
+            onClick={logOutUser}
+          >
+            Log Out
+          </button>
+        )}
+        {!isLoggedIn &&
+          location.pathname !== "/login" &&
+          location.pathname !== "/signup" && (
+            <Link to="/login">
+              <button className="btn-primary px-4 py-1 rounded hover:bg-blue-400">
+                Log In
+              </button>
+            </Link>
+          )}
+      </div>
+    </div>
+
+    /* 
+         <div className="navlinksContainer">
           {navLinks.map((link) => (
             <NavLink className="navlinks" key={link.id} to={link.to}>
               <p className="singleNavlink">{link.label}</p>
@@ -43,7 +78,8 @@ export default function Navbar({ toggleSidebar }) {
               </Link>
             )}
         </div>
-      </nav>
-    </header>
+   
+    </div>
+    */
   );
 }

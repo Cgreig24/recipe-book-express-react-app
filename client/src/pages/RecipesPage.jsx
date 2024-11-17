@@ -40,7 +40,7 @@ function RecipeDeets() {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />
-          <button className="searchButton" type="submit">
+          <button className="btn btn-secondary" type="submit">
             Search
           </button>
         </form>
