@@ -54,39 +54,79 @@ function RecipeFetcher() {
   }, [recipeid]);
 
   return (
-    <>
-      <div>
-        {recipeFetch ? (
-          <div className="prose">
-            <h2>{recipeFetch.title}</h2>
-            <img src={recipeFetch.image} alt={recipeFetch.title} />
-            <p>Serves: {recipeFetch.servings}</p>
-            <p>Course: {recipeFetch.dishType}</p>
-            <p>Cuisine: {recipeFetch.cuisineType}</p>
-            <p>Time to make: {recipeFetch.totalTime}</p>
-            <h3>Ingredients</h3>
-            <ul className="ingredientsListContainer">
+    <div className="p-6">
+      {recipeFetch ? (
+        <div className="prose">
+          {/* Recipe Title */}
+          <h2 className="text-4xl text-primary font-bold mb-4 text-transform: capitalize">
+            {recipeFetch.title}
+          </h2>
+
+          {/* Recipe Image */}
+          <img
+            src={recipeFetch.image}
+            alt={recipeFetch.title}
+            className="w-64 h-64 border-4 border-neutral rounded-xl mb-4"
+          />
+
+          {/* Recipe Info */}
+          <div className="flex gap-4 mb-4">
+            {recipeFetch.servings && (
+              <span className="badge badge-success p-3">
+                Serves: {recipeFetch.servings}
+              </span>
+            )}
+            {recipeFetch.dishType && (
+              <span className="badge badge-primary p-3">
+                Course: {recipeFetch.dishType}
+              </span>
+            )}
+            {recipeFetch.cuisineType && (
+              <span className="badge badge-accent p-3">
+                Cuisine: {recipeFetch.cuisineType}
+              </span>
+            )}
+            {recipeFetch.totalTime && (
+              <span className="badge badge-warning p-3">
+                Time: {recipeFetch.totalTime}
+              </span>
+            )}
+          </div>
+
+          {/* Ingredients */}
+          <div className="p-4">
+            <h3 className="text-xl font-semibold mb-2">Ingredients</h3>
+            <ul className="list-inside">
               {recipeFetch.ingredients.map((ingredient, index) => (
-                <li key={index}>{ingredient}</li>
+                <li key={index} className="py-1">
+                  {ingredient}
+                </li>
               ))}
             </ul>
-            <h3>Instructions</h3>
-            <div className="instructionsSection">
-              <p>Instructions provided by {recipeFetch.source}</p>
-              <p>
-                {" "}
-                <a
-                  href={recipeFetch.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  View Instructions
-                </a>
-              </p>
-            </div>
+          </div>
 
+          {/* Instructions */}
+          <div className="p-4">
+            <h3 className="text-xl font-semibold mb-2">Instructions</h3>
+            <p className="mb-2">
+              Instructions provided by {recipeFetch.source}
+            </p>
+            <p>
+              <a
+                href={recipeFetch.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-primary hover:bg-primary hover:text-white p-2 rounded"
+              >
+                View Instructions
+              </a>
+            </p>
+          </div>
+
+          {/* Buttons */}
+          <div className="flex gap-4 mt-6">
             <button
-              className="backButton"
+              className="btn btn-neutral"
               onClick={() => {
                 navigate(-1);
               }}
@@ -102,21 +142,21 @@ function RecipeFetcher() {
               Add to Your Recipes
             </button>
           </div>
-        ) : (
-          <div>
-            <p>Loading recipe...</p>
-            <button
-              className="btn btn-outline"
-              onClick={() => {
-                navigate(-1);
-              }}
-            >
-              Back
-            </button>
-          </div>
-        )}
-      </div>
-    </>
+        </div>
+      ) : (
+        <div className="text-center">
+          <p>Loading recipe...</p>
+          <button
+            className="btn btn-outline"
+            onClick={() => {
+              navigate(-1);
+            }}
+          >
+            Back
+          </button>
+        </div>
+      )}
+    </div>
   );
 }
 

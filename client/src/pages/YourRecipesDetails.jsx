@@ -173,42 +173,90 @@ function YourRecipeDetails() {
   return (
     <>
       {yourRecipeFetchDetails ? (
-        <div className="prose">
-          <h2>{yourRecipeFetchDetails.title}</h2>
-          <img src={yourRecipeFetchDetails.image} />
-          <div className="recipeDetailsQuickHits">
-            <p>{yourRecipeFetchDetails.dishType}</p>
-            <p>{yourRecipeFetchDetails.cuisineType}</p>
-            <p>{yourRecipeFetchDetails.servings}</p>
-            <p>{yourRecipeFetchDetails.totalTime}</p>
+        <div className="prose p-6">
+          <h2 className="text-4xl text-primary font-bold text-transform: capitalize">
+            {yourRecipeFetchDetails.title}
+          </h2>
+          <img
+            src={yourRecipeFetchDetails.image}
+            className="w-64 h-64 border-4 border-neutral rounded-xl"
+          />
+          <div className="flex gap-4 my-4">
+            {yourRecipeFetchDetails.dishType && (
+              <span className="badge badge-primary capitalize p-3">
+                {yourRecipeFetchDetails.dishType}
+              </span>
+            )}
+            {yourRecipeFetchDetails.cuisineType && (
+              <span className="badge badge-accent capitalize p-3">
+                {yourRecipeFetchDetails.cuisineType}
+              </span>
+            )}
+            {yourRecipeFetchDetails.servings && (
+              <span className="badge badge-success capitalize p-3">
+                {" "}
+                Serves {yourRecipeFetchDetails.servings}
+              </span>
+            )}
+            {yourRecipeFetchDetails.totalTime && (
+              <span className="badge badge-warning capitalize p-3">
+                {yourRecipeFetchDetails.totalTime}
+              </span>
+            )}
           </div>
-          <div className="IngredientsSection">
-            <h3>Ingredients</h3>
-            <button>Edit Ingredients</button>
-            <ul className="ingredientsListContainer">
+          <div className="p-4">
+            <h3 className="text-xl font-semibold">Ingredients</h3>
+            <button className="btn btn-link text-sm">Edit Ingredients</button>
+            <ul className="list-inside">
               {yourRecipeFetchDetails.ingredients.map((ingredient, index) => (
-                <li key={index}>
+                <li
+                  key={index}
+                  className="flex justify-between items-center py-2"
+                >
                   {ingredientToEdit === index ? (
                     <input
                       type="text"
-                      placeholder="foo"
+                      className="input input-bordered w-full"
                       value={ingredientToEdit}
                       onChange={(e) => setIngredientToEdit(e.target.value)}
                     />
                   ) : (
                     <>
-                      {ingredient}{" "}
-                      <button onClick={() => setIngredientToEdit(index)}>
-                        Edit
-                      </button>
-                      <button onClick={() => handleRemoveIngredient(index)}>
-                        Remove
-                      </button>
+                      {ingredient}
+                      <div className="space-x-2">
+                        <button
+                          className="btn btn-xs btn-outline"
+                          onClick={() => setIngredientToEdit(index)}
+                        >
+                          Edit
+                        </button>
+                        <button
+                          className="btn btn-xs btn-outline btn-error p-1"
+                          onClick={() => handleRemoveIngredient(index)}
+                        >
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            className="h-3 w-3"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth="2"
+                              d="M6 18L18 6M6 6l12 12"
+                            />
+                          </svg>
+                        </button>
+                      </div>
                     </>
                   )}
-
                   {ingredientToEdit === index && (
-                    <button onClick={() => handleEditIngredient(index)}>
+                    <button
+                      className="btn btn-sm btn-primary"
+                      onClick={() => handleEditIngredient(index)}
+                    >
                       Save
                     </button>
                   )}
@@ -216,7 +264,7 @@ function YourRecipeDetails() {
               ))}
             </ul>
 
-            <div>
+            <div className="mt-4">
               <input
                 className="input input-bordered input-secondary w-full max-w-xs"
                 type="text"
@@ -225,58 +273,64 @@ function YourRecipeDetails() {
                 value={newIngredient}
                 onChange={(e) => setNewIngredient(e.target.value)}
               />
-              <button onClick={handleAddIngredient}>Add</button>
+              <button
+                className="btn btn-outline btn-success mt-2"
+                onClick={handleAddIngredient}
+              >
+                Add
+              </button>
             </div>
           </div>
 
-          <div>
-            <h3 className="instructionsHeader">Instructions</h3>
-            <div className="yourRecipesInstructions">
-              <p>Instructions provided by {yourRecipeFetchDetails.source}</p>
-              <p>
-                {" "}
-                <a
-                  href={yourRecipeFetchDetails.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  View Instructions
-                </a>
-              </p>
-            </div>
+          <div className="p-4">
+            <h3 className="text-xl font-semibold">Instructions</h3>
+            <p>Instructions provided by {yourRecipeFetchDetails.source}</p>
+            <a
+              href={yourRecipeFetchDetails.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-primary hover:bg-primary hover:text-white p-2 rounded"
+            >
+              View Instructions
+            </a>
           </div>
-          <div className="notesSection">
-            <h3>Notes or suggestions</h3>
-            <ul>
+          <div className="p-4">
+            <h3 className="text-xl font-semibold">Notes or Suggestions</h3>
+            <ul className="list-disc pl-5">
               {yourRecipeFetchDetails.notes.map((note, index) => (
                 <li key={index}>{note}</li>
               ))}
             </ul>
-            <div>
+            <div className="mt-4">
               <textarea
-                className="textarea textarea-secondary"
+                className="textarea textarea-bordered w-full max-w-xs"
                 id="notes"
                 placeholder="Add additional notes here..."
                 value={notes}
                 onChange={(e) => setNotes(e.target.value)}
                 rows="3"
-                cols="70"
               />
+              <button
+                className="btn btn-outline btn-sm mt-2"
+                onClick={handleSaveNotes}
+              >
+                Save
+              </button>
             </div>
-            <button onClick={handleSaveNotes}>Save</button>
           </div>
-
-          <button className="btn btn-primary" onClick={handleDelete}>
-            Remove from Recipe Book
-          </button>
-          <button
-            className="btn btn-neutral"
-            onClick={() => {
-              navigate(-1);
-            }}
-          >
-            Back
-          </button>
+          <div className="flex gap-4 mt-6">
+            <button className="btn btn-primary" onClick={handleDelete}>
+              Remove from Recipe Book
+            </button>
+            <button
+              className="btn btn-neutral"
+              onClick={() => {
+                navigate(-1);
+              }}
+            >
+              Back
+            </button>
+          </div>
         </div>
       ) : (
         <div>

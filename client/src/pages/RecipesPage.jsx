@@ -31,7 +31,10 @@ function RecipeDeets() {
   };
 
   const getDishTypeColor = (dishType) => {
-    switch (dishType) {
+    if (typeof dishType !== "string") return "bg-gray-500"; // Default to gray if dishType is not a string
+
+    const dishTypeLower = dishType.toLowerCase(); // Safe to call after type check
+    switch (dishTypeLower) {
       case "main course":
         return "bg-blue-500"; // Blue for main course
       case "condiments and sauces":
