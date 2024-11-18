@@ -57,19 +57,20 @@ function RecipeFetcher() {
     <>
       <div>
         {recipeFetch ? (
-          <div>
+          <div className="prose">
             <h2>{recipeFetch.title}</h2>
             <img src={recipeFetch.image} alt={recipeFetch.title} />
             <p>Serves: {recipeFetch.servings}</p>
             <p>Course: {recipeFetch.dishType}</p>
             <p>Cuisine: {recipeFetch.cuisineType}</p>
             <p>Time to make: {recipeFetch.totalTime}</p>
-
+            <h3>Ingredients</h3>
             <ul className="ingredientsListContainer">
               {recipeFetch.ingredients.map((ingredient, index) => (
                 <li key={index}>{ingredient}</li>
               ))}
             </ul>
+            <h3>Instructions</h3>
             <div className="instructionsSection">
               <p>Instructions provided by {recipeFetch.source}</p>
               <p>
@@ -83,14 +84,6 @@ function RecipeFetcher() {
                 </a>
               </p>
             </div>
-            <button
-              className="btn btn-success"
-              onClick={() => {
-                addToYourRecipes();
-              }}
-            >
-              Add to Your Recipes
-            </button>
 
             <button
               className="backButton"
@@ -99,6 +92,14 @@ function RecipeFetcher() {
               }}
             >
               Back
+            </button>
+            <button
+              className="btn btn-success"
+              onClick={() => {
+                addToYourRecipes();
+              }}
+            >
+              Add to Your Recipes
             </button>
           </div>
         ) : (

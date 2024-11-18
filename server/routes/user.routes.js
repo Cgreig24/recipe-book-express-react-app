@@ -5,10 +5,26 @@ import User from "../models/User.model.js";
 import isAuthenticated from "../middleware/jwt.middleware.js";
 const yourRecipesRouter = express.Router({ mergeParams: true });
 
-router.get("/:id", (req, res, next) => {
+router.get("/:userid", isAuthenticated, async (req, res, next) => {
   // console.log(req.params);
-  const { id } = req.params;
+  const { userId } = req.payload._id;
   // console.log(id);
+
+  try {
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    res.status(200).json(user);
+  } catch (error) {
+    console.error("Error fetching user:", error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+});
+
+{
+  /* 
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
     res.status(400).json({ message: "Specified id is not valid" });
@@ -22,6 +38,8 @@ router.get("/:id", (req, res, next) => {
     .then((user) => res.status(200).json(user))
     .catch((error) => res.json(error));
 });
+*/
+}
 
 {
   /* 

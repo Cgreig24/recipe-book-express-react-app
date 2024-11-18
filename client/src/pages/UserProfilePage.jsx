@@ -17,9 +17,9 @@ function UserProfilePage() {
       const storedToken = localStorage.getItem("authToken");
       console.log(user);
 
-      if (storedToken) {
+      if (storedToken && user) {
         axios
-          .get(`${API_URL}/api/user/${user.payload._id}`, {
+          .get(`${API_URL}/api/user/${user._id}`, {
             headers: { Authorization: `Bearer ${storedToken}` },
           })
           .then((response) => {

@@ -76,7 +76,7 @@ function LoginPage() {
 
         <button
           type="submit"
-          className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded mt-4 transition duration-150 ease-in-out"
+          className="btn btn-primary hover:bg-blue-600 text-white font-bold py-2 px-4 rounded mt-4 transition duration-150 ease-in-out"
         >
           Log In
         </button>
@@ -85,7 +85,9 @@ function LoginPage() {
       {errorMessage && <p className="error-message">{errorMessage}</p>}
 
       <p className="mt-10 mb-2">Don&apos;t have an account yet?</p>
-      <Link to={"/signup"}> Sign Up</Link>
+      <Link to={"/signup"}>
+        <button className="btn btn-secondary"> Sign Up</button>
+      </Link>
     </div>
   );
 }

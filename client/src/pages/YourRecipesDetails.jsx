@@ -173,7 +173,7 @@ function YourRecipeDetails() {
   return (
     <>
       {yourRecipeFetchDetails ? (
-        <div className="bg-primary">
+        <div className="prose">
           <h2>{yourRecipeFetchDetails.title}</h2>
           <img src={yourRecipeFetchDetails.image} />
           <div className="recipeDetailsQuickHits">
@@ -218,6 +218,7 @@ function YourRecipeDetails() {
 
             <div>
               <input
+                className="input input-bordered input-secondary w-full max-w-xs"
                 type="text"
                 id="new-ingredient"
                 placeholder="Add extra ingredient..."
@@ -253,6 +254,7 @@ function YourRecipeDetails() {
             </ul>
             <div>
               <textarea
+                className="textarea textarea-secondary"
                 id="notes"
                 placeholder="Add additional notes here..."
                 value={notes}
