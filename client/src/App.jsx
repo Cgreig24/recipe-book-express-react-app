@@ -25,6 +25,7 @@ import IsAnon from "./components/IsAnon";
 
 function App() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  // const [pagination, setPagination] = useState(0);
 
   return (
     <>
@@ -35,7 +36,15 @@ function App() {
           <div className="flex-grow">
             <Routes>
               <Route path="/" element={<Homepage />} />
-              <Route path="/recipes" element={<RecipesPage />} />
+              <Route
+                path="/recipes"
+                element={
+                  <RecipesPage
+                  // pagination={pagination}
+                  // setPagination={setPagination}
+                  />
+                }
+              />
               <Route path="/recipes/:recipeid" element={<RecipeDetails />} />
               <Route path="/signup" element={<SignupPage />} />
               <Route path="/login" element={<LoginPage />} />

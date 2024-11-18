@@ -3,6 +3,7 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/auth.context";
+import cartoonFood from "../assets/cartoon-food.png";
 
 function YourRecipes() {
   const { user } = useContext(AuthContext);
@@ -14,11 +15,14 @@ function YourRecipes() {
 
   const fetchYourRecipe = async () => {
     try {
-      const response = await axios.get(`http://localhost:5012/your-recipes`, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("authToken")}`,
-        },
-      });
+      const response = await axios.get(
+        `${import.meta.env.VITE_API_URL}/your-recipes`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+          },
+        }
+      );
       setYourRecipeFetch(response.data.data);
     } catch (error) {
       console.error("Error fetching recipe:", error);
@@ -60,6 +64,10 @@ function YourRecipes() {
                   <img
                     className="rounded-xl w-full h-48 object-cover"
                     src={recipe.image}
+                    onError={(e) => {
+                      e.target.src = cartoonFood;
+                    }}
+                    alt="image not found"
                   />
                 </figure>
                 <div>

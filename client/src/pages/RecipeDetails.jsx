@@ -15,7 +15,7 @@ function RecipeFetcher() {
   const fetchRecipe = async () => {
     try {
       const response = await axios.post(
-        `http://localhost:5012/recipes/${recipeid}`
+        `${import.meta.env.VITE_API_URL}/recipes/${recipeid}`
       );
       setRecipeFetch(response.data.data);
     } catch (error) {
@@ -33,7 +33,7 @@ function RecipeFetcher() {
     try {
       const token = localStorage.getItem("authToken");
       const response = await axios.post(
-        `http://localhost:5012/your-recipes/${recipeid}`,
+        `${import.meta.env.VITE_API_URL}/your-recipes/${recipeid}`,
         {},
         {
           headers: {

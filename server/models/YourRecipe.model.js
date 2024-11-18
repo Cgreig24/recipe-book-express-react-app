@@ -22,5 +22,9 @@ const YourRecipeSchema = new mongoose.Schema({
 export { YourRecipeSchema };
 
 // Default export for Recipe model
-const YourRecipe = mongoose.model("YourRecipe", YourRecipeSchema);
+const YourRecipe = mongoose.model(
+  "YourRecipe",
+  YourRecipeSchema,
+  "yourrecipes"
+);
 export default YourRecipe;

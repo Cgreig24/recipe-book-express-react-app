@@ -7,10 +7,13 @@ function RecipeDeets() {
   const [recipes, setRecipes] = useState([]);
   const [search, setSearch] = useState([""]);
   const [query, setQuery] = useState("");
+
   const navigate = useNavigate();
 
   const getRecipes = async () => {
-    const response = await axios.get(`http://localhost:5012/recipes/${query}`);
+    const response = await axios.get(
+      `${import.meta.env.VITE_API_URL}/recipes/${query}`
+    );
     console.log(response.data);
     setRecipes(response.data);
   };
@@ -64,6 +67,13 @@ function RecipeDeets() {
     }
   };
 
+  {
+    /*
+  const nextClick = () => {
+    setPagination(pagination + 20);
+  };
+ */
+  }
   return (
     <>
       <div>
@@ -84,7 +94,9 @@ function RecipeDeets() {
             Search
           </button>
         </form>
-
+        {/* 
+        <p onClick={nextClick}>Next</p>
+        */}
         <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 gap-6">
           {recipes.map((recipe) => (
             <div

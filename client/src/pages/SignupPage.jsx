@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 // Import the string from the .env with URL of the API/server - http://localhost:5005
-const API_URL = `http://localhost:5012`;
+const API_URL = `${import.meta.env.VITE_API_URL}`;
 //import.meta.env.VITE_API_URL;
 
 function SignupPage() {

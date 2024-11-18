@@ -16,5 +16,5 @@ const userSchema = new Schema({
 export { userSchema };
 
 // Default export for Recipe model
-const User = mongoose.model("User", userSchema);
+const User = mongoose.model("User", userSchema, "users");
 export default User;

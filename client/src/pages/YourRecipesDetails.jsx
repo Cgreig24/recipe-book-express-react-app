@@ -3,6 +3,7 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/auth.context";
+import cartoonFood from "../assets/cartoon-food.png";
 
 function YourRecipeDetails() {
   const { user } = useContext(AuthContext);
@@ -18,7 +19,7 @@ function YourRecipeDetails() {
   const fetchYourRecipeDetails = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:5012/your-recipes/${recipeid}`,
+        `${import.meta.env.VITE_API_URL}/your-recipes/${recipeid}`,
 
         {
           headers: {
@@ -47,7 +48,7 @@ function YourRecipeDetails() {
   const handleSaveNotes = async () => {
     try {
       const response = await axios.patch(
-        `http://localhost:5012/your-recipes/${recipeid}`,
+        `${import.meta.env.VITE_API_URL}/your-recipes/${recipeid}`,
         { notes },
         {
           headers: {
@@ -75,7 +76,7 @@ function YourRecipeDetails() {
 
     try {
       const response = await axios.patch(
-        `http://localhost:5012/your-recipes/${recipeid}`,
+        `${import.meta.env.VITE_API_URL}/your-recipes/${recipeid}`,
         { ingredients: updatedIngredients },
         {
           headers: {
@@ -99,7 +100,7 @@ function YourRecipeDetails() {
 
     try {
       const response = await axios.patch(
-        `http://localhost:5012/your-recipes/${recipeid}`,
+        `${import.meta.env.VITE_API_URL}/your-recipes/${recipeid}`,
         { ingredients: updatedIngredients },
         {
           headers: {
@@ -128,7 +129,7 @@ function YourRecipeDetails() {
 
       try {
         const response = await axios.patch(
-          `http://localhost:5012/your-recipes/${recipeid}`,
+          `${import.meta.env.VITE_API_URL}/your-recipes/${recipeid}`,
           { ingredients: updatedIngredients },
           {
             headers: {
@@ -149,7 +150,7 @@ function YourRecipeDetails() {
   const handleDelete = async () => {
     try {
       const response = await axios.delete(
-        `http://localhost:5012/your-recipes/${recipeid}`,
+        `${import.meta.env.VITE_API_URL}/your-recipes/${recipeid}`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("authToken")}`,
@@ -179,6 +180,9 @@ function YourRecipeDetails() {
           </h2>
           <img
             src={yourRecipeFetchDetails.image}
+            onError={(e) => {
+              e.target.src = cartoonFood;
+            }}
             className="w-64 h-64 border-4 border-neutral rounded-xl"
           />
           <div className="flex gap-4 my-4">

@@ -30,6 +30,7 @@ app.use("/api/user", isAuthenticated, userRouter);
 app.get("/recipes/:query", async (req, res) => {
   const response = await axios.get(
     `https://api.edamam.com/api/recipes/v2?type=public&q=${req.params.query}&app_id=${process.env.VITE_APP_ID}&app_key=${process.env.VITE_APP_KEY}`
+    //`https://api.edamam.com/api/recipes/v2?type=public&q=${req.params.query}&app_id=${process.env.VITE_APP_ID}&app_key=${process.env.VITE_APP_KEY}&from=${pagination}&to=${paginationEnd}`
   );
   // console.log(response.data.hits);
   res.json(response.data.hits);
@@ -132,12 +133,10 @@ app.get("/api/user/:userid", isAuthenticated, async (req, res) => {
 });
 
 //fetch recipes for /your-recipes list
-app.get("/your-recipes/", isAuthenticated, async (req, res) => {
+app.get("/your-recipes", isAuthenticated, async (req, res) => {
   try {
     const userId = req.payload._id;
-
     const recipes = await YourRecipe.find({ userId });
-
     if (!recipes || recipes.length === 0) {
       return res
         .status(404)
