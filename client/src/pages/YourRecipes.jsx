@@ -49,7 +49,7 @@ function YourRecipes() {
   return (
     <>
       {yourRecipeFetch.length > 0 ? (
-        <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 gap-6 pt-20 p-6">
           {yourRecipeFetch.map((recipe) => (
             <div className="card bg-base-100 w-full shadow-xl">
               <div
@@ -62,7 +62,7 @@ function YourRecipes() {
                 </h2>
                 <figure className="px-4 pt-1">
                   <img
-                    className="rounded-xl w-full h-48 object-cover"
+                    className="rounded-xl w-full h-53 object-cover"
                     src={recipe.image}
                     onError={(e) => {
                       e.target.src = cartoonFood;
