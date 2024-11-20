@@ -31,8 +31,8 @@ function LoginPage() {
   };
 
   return (
-    <div className="CohortCreatePage p-8 pb-16 mb-10 mt-10 rounded-lg shadow-md flex flex-col h-full relative w-full max-w-3xl mx-auto">
-      <div className="flex justify-center bg-white items-center mb-4 pt-8 absolute top-0 left-0 right-0 py-2 bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 border-b border-gray-300 shadow-sm"></div>
+    <div className="bg-base-200 p-8 pb-16 mb-10 mt-10 rounded-lg shadow-md flex flex-col h-full relative w-full max-w-3xl mx-auto">
+      <div className="flex justify-center items-center mb-4 pt-8 absolute top-0 left-0 right-0 py-2 bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 border-b border-gray-300 shadow-sm"></div>
 
       <form
         onSubmit={handleLoginSubmit}
@@ -76,7 +76,7 @@ function LoginPage() {
 
         <button
           type="submit"
-          className="btn btn-primary hover:bg-blue-600 text-white font-bold py-2 px-4 rounded mt-4 transition duration-150 ease-in-out"
+          className="btn btn-primary hover:bg-accent text-white font-bold py-2 px-4 rounded mt-4 transition duration-150 ease-in-out"
         >
           Log In
         </button>

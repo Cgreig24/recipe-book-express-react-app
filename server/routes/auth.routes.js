@@ -72,7 +72,7 @@ router.post("/signup", (req, res, next) => {
 console.log("Auth routes loaded...");
 router.post("/login", (req, res, next) => {
   console.log("Login route hit!");
-  // console.log(req.body);
+  console.log(req.body);
   const { email, password } = req.body;
 
   if (email === "" || password === "") {

@@ -25,7 +25,7 @@ import authRouter from "./routes/auth.routes.js";
 app.use("/auth", authRouter);
 
 import userRouter from "./routes/user.routes.js";
-app.use("/api/user", isAuthenticated, userRouter);
+app.use("api/user", isAuthenticated, userRouter);
 
 app.get("/recipes/:query", async (req, res) => {
   const response = await axios.get(
@@ -73,18 +73,6 @@ app.post("/recipes/:recipeid", async (req, res) => {
   }
 });
 
-{
-  /* 
-app.get("/recipes/:recipeid", async (req, res) => {
-  const response = await axios.get(
-    `https://api.edamam.com/api/recipes/v2/${recipeid}?type=public&app_id=${process.env.VITE_APP_ID}&app_key=${process.env.VITE_APP_KEY}`
-  );
-  console.log(response.data.hits);
-  res.json(response.data.hits);
-});
-*/
-}
-
 // Post data from MongoDB collection recipes into MongoDB collection
 app.post("/your-recipes/:recipeid", isAuthenticated, async (req, res) => {
   console.log("req.headers.authorization", req.headers.authorization);
@@ -114,11 +102,11 @@ app.post("/your-recipes/:recipeid", isAuthenticated, async (req, res) => {
   }
 });
 
-app.get("/api/user/:userid", isAuthenticated, async (req, res) => {
+app.get("/user/:userid", isAuthenticated, async (req, res) => {
   console.log(req.params);
-  const userid = req.payload._id;
+  const userId = req.payload._id;
   try {
-    const user = await User.findById({ userid });
+    const user = await User.findById({ _id: userId });
 
     if (!user) {
       return res.status(404).json({ message: "User not found" });

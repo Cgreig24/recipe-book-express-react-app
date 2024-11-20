@@ -48,7 +48,7 @@ function App() {
               <Route path="/recipes/:recipeid" element={<RecipeDetails />} />
               <Route path="/signup" element={<SignupPage />} />
               <Route path="/login" element={<LoginPage />} />
-              <Route path="/profile" element={<UserProfilePage />} />
+              <Route path="/user" element={<UserProfilePage />} />
               <Route path="/your-recipes" element={<YourRecipes />} />
               <Route
                 path="/your-recipes/:recipeid"

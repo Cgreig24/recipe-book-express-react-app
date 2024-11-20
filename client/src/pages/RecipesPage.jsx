@@ -15,6 +15,7 @@ function RecipeDeets() {
       `${import.meta.env.VITE_API_URL}/recipes/${query}`
     );
     console.log(response.data);
+    console.log(response);
     setRecipes(response.data);
   };
 
@@ -76,9 +77,9 @@ function RecipeDeets() {
   }
   return (
     <>
-      <div>
+      <div className="bg-base-200 p-6">
         <form
-          className="flex justify-center items-center space-x-2 mt-8 mb-8"
+          className="flex justify-center items-center space-x-2 mt-8 mb-8 bg-base-200"
           onSubmit={getSearch}
         >
           <input
@@ -97,23 +98,23 @@ function RecipeDeets() {
         {/* 
         <p onClick={nextClick}>Next</p>
         */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 gap-6 bg-base-200 pt-4">
           {recipes.map((recipe) => (
             <div
-              className="card bg-base-100 w-full shadow-xl"
+              className="card bg-base-100 w-full shadow-xl prose"
               key={recipe.recipe.uri}
               onClick={() => handleRecipeClick(recipe.recipe)}
             >
-              <h2 className="card-title text-center text-ellipsis overflow-hidden h-16">
+              <h2 className="text-primary text-transform: capitalize text-center text-ellipsis overflow-hidden h-16 pt-2 px-1">
                 {recipe.recipe.label}
               </h2>
-              <figure className="px-10 pt-10">
+              <div className="px-4 pt-1">
                 <img
-                  className="rounded-xl w-full h-48 object-cover"
+                  className="rounded-xl w-full h-48 object-cover border-4 border-neutral"
                   src={recipe.recipe.image}
                   alt={recipe.recipe.label}
                 />
-              </figure>
+              </div>
               <div className="card-body">
                 <p
                   className={`text-center text-transform: capitalize my-2 text-white p-2 rounded-md ${getDishTypeColor(
