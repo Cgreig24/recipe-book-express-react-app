@@ -1,9 +1,11 @@
 import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+
 import { AuthContext } from "../context/auth.context";
 import cartoonFood from "../assets/cartoon-food.png";
+import allNormaImage from "../assets/alla-norma.jpg";
 
 function YourRecipes() {
   const { user } = useContext(AuthContext);
@@ -88,9 +90,37 @@ function YourRecipes() {
           ))}
         </div>
       ) : (
-        <div>
-          <h2>Nothing rendered</h2>
-          <button>Remove from Recipe Book</button>
+        <div className="pt-10">
+          <div className="hero bg-base-200 min-h-screen">
+            <div className="hero-content flex-col lg:flex-row pt-10">
+              <img
+                src={allNormaImage}
+                className="max-w-sm rounded-lg shadow-2xl"
+              />
+              <div>
+                <h1 className="text-5xl font-bold text-primary">
+                  Recipe Book App
+                </h1>
+                <p className="py-6">
+                  <Link to={"/login"}>
+                    <span className="text-secondary underline font-bold">
+                      {" "}
+                      Log in
+                    </span>{" "}
+                  </Link>
+                  to view your recipe book.
+                  <br /> Don't have an account yet?{" "}
+                  <Link to={"/signup"}>
+                    <span className="text-secondary underline font-bold">
+                      Sign up here
+                    </span>{" "}
+                  </Link>{" "}
+                  to create
+                  <br /> your personalized recipe book.
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
       )}
     </>
