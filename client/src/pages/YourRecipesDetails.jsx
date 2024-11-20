@@ -174,7 +174,7 @@ function YourRecipeDetails() {
   return (
     <>
       {yourRecipeFetchDetails ? (
-        <div className="prose p-6">
+        <div className="prose p-6 bg-base-200 w-full">
           <h2 className="text-4xl text-primary font-bold text-transform: capitalize">
             {yourRecipeFetchDetails.title}
           </h2>

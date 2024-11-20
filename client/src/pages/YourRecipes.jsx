@@ -49,7 +49,7 @@ function YourRecipes() {
   return (
     <>
       {yourRecipeFetch.length > 0 ? (
-        <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 gap-6 pt-20 p-6">
+        <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 gap-6 pt-20 p-6 bg-base-200">
           {yourRecipeFetch.map((recipe) => (
             <div className="card bg-base-100 w-full shadow-xl">
               <div
@@ -57,19 +57,19 @@ function YourRecipes() {
                 key={recipe._id}
                 onClick={() => handleYourRecipeClick(recipe._id)}
               >
-                <h2 className="card-title text-primary text-transform: capitalize text-center text-ellipsis overflow-hidden h-16">
+                <h2 className="text-primary text-transform: capitalize text-center text-ellipsis overflow-hidden h-16 pt-2 px-1">
                   {recipe.title}
                 </h2>
-                <figure className="px-4 pt-1">
+                <div className="px-4 pt-1 mt-1">
                   <img
-                    className="rounded-xl w-full h-53 object-cover"
+                    className="w-full h-53 object-cover border-4 border-neutral rounded-xl"
                     src={recipe.image}
                     onError={(e) => {
                       e.target.src = cartoonFood;
                     }}
                     alt="image not found"
                   />
-                </figure>
+                </div>
                 <div>
                   <p
                     className={`text-center text-transform: capitalize my-2 text-secondary p-2 rounded-md`}

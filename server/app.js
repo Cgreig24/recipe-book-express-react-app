@@ -30,9 +30,7 @@ app.use("/api/user", isAuthenticated, userRouter);
 app.get("/recipes/:query", async (req, res) => {
   const response = await axios.get(
     `https://api.edamam.com/api/recipes/v2?type=public&q=${req.params.query}&app_id=${process.env.VITE_APP_ID}&app_key=${process.env.VITE_APP_KEY}`
-    //`https://api.edamam.com/api/recipes/v2?type=public&q=${req.params.query}&app_id=${process.env.VITE_APP_ID}&app_key=${process.env.VITE_APP_KEY}&from=${pagination}&to=${paginationEnd}`
   );
-  // console.log(response.data.hits);
   res.json(response.data.hits);
 });
 
