@@ -29,7 +29,7 @@ function App() {
 
   return (
     <>
-      <div className="App relative z-20 pt-20">
+      <div className="App relative z-20 pt-10">
         <Navbar />
 
         <div className="min-h-screen flex flex-col">
