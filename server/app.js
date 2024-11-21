@@ -207,6 +207,10 @@ app.patch("/your-recipes/:recipeid", isAuthenticated, async (req, res) => {
   }
 });
 
+app.get("/", (req, res) => {
+  res.send("Server is up and running!");
+});
+
 app.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}`);
 });
