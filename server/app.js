@@ -37,8 +37,8 @@ app.get("/recipes/:query", async (req, res) => {
 // Fetch data from Edamam API and save it to MongoDB
 app.post("/recipes/:recipeid", async (req, res) => {
   const { recipeid } = req.params;
-  const recipeUrl = `https://api.edamam.com/api/recipes/v2/${recipeid}?type=public&app_id=${process.env.VITE_APP_ID}&app_key=${process.env.VITE_APP_KEY}`;
-
+  //const recipeUrl = `https://api.edamam.com/api/recipes/v2/${recipeid}?type=public&app_id=${process.env.VITE_APP_ID}&app_key=${process.env.VITE_APP_KEY}`;
+  const recipeUrl = `${process.env.VITE_BASE_URL}/api/recipes/v2/${recipeid}?type=public&app_id=${process.env.VITE_APP_ID}&app_key=${process.env.VITE_APP_KEY}`;
   try {
     const response = await axios.get(recipeUrl);
     // console.log(response);
