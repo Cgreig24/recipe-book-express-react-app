@@ -15,7 +15,19 @@ const app = express();
 const PORT = process.env.VITE_PORT;
 
 connectDB();
-app.use(cors({ origin: process.env.VITE_PORT, credentials: true }));
+//app.use(cors({ origin: process.env.VITE_PORT, credentials: true }));
+const FRONTEND_URL = process.env.ORIGIN || "http://localhost:3000";
+
+// Set the trust proxy to 1 (to handle proxies correctly)
+app.set("trust proxy", 1);
+
+// Enable CORS with the frontend URL
+app.use(
+  cors({
+    origin: FRONTEND_URL,
+  })
+);
+
 app.use(express.json());
 app.use(morgan("dev"));
 app.use(express.urlencoded({ extended: false }));
