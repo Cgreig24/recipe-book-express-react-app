@@ -22,11 +22,21 @@ const FRONTEND_URL = process.env.ORIGIN || "http://localhost:3000";
 app.set("trust proxy", 1);
 
 // Enable CORS with the frontend URL
-app.use(
-  cors({
-    origin: FRONTEND_URL,
-  })
-);
+//app.use(
+//cors({
+//origin: FRONTEND_URL,
+//})
+//);
+
+const corsOptions = {
+  origin: FRONTEND_URL,
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+  credentials: true, // if you are sending cookies or authorization headers
+  preflightContinue: false,
+};
+
+app.use(cors(corsOptions));
 
 app.use(express.json());
 app.use(morgan("dev"));
